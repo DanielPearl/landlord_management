@@ -1,0 +1,5 @@
+.DS_Store
+.idea/
+*.pyc
+__pycache__/
+landlord_mgmt/local_settings.py 

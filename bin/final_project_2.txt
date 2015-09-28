@@ -1,0 +1,83 @@
+Introduction to Project:
+
+    The final project will be a tool for landlords to organize essential information. The full program will organize information regarding building, apartment, rooms, items and tenant profiles. For this assignment however, I will start with one bedroom and allow the user to add other rooms and apartments.
+
+    A homepage will be constructed that allows users to add information, update information or view information.
+
+    If a user decides to update information, they will be given the option to update information in a pre-existing building, apartment or room. If the user wants to view information, they will be able to see the details within each building, apartment and room.
+
+Adding new information:
+
+Adding new building:
+
+    If a user decides to add information, they will be given the option to add a new building, new apartment, or new room. If a new building is selected, the user will be prompted to fill out a form containing the following information:
+
+        • Building number (pk)
+        • Building address
+        • Number of units
+        • Occupancy
+        • Notes for additional information
+
+    Once added, this this information will be added to the database.
+
+Adding new apartment number:
+
+    If a new apartment is selected, the user will be prompted to fill out a form containing the following information:
+
+        • Apartment number
+        • number of rooms
+        • category of rooms (bedroom, kitchen, etc.)
+        • Notes for additional information
+
+
+
+
+
+
+
+If the user decides to add new informations, they will be given an option to c
+
+If the user decides to update information, they will be redirected to a form that contains items within a building, apartment # or room. The form will contain the following inputs:
+
+    • Room number being updated
+    • category of item in room (eg. carpet, walls, trim)
+    • date in which item is installed/updated
+    • vendor who installed/updated item
+    • name of contact person
+    • name of maintenance person who installed/updated item if no vendor was used. (automatic)
+    • name of landlord who oversaw work (automatic)
+    • cost of item
+    • cost of labor
+    • notes (eg. was there a problem with installation?, was work satisfactory?)
+
+Eventually, I'd like to pull some of this information from google calendar or outlook, but for this project, a form will be used. When all of this information has been filled out and submitted, the website will display a submission confirmation and this information will be saved in the room.
+
+The user will also be given the option to view the room. In the partial project, there will only be one room with various items inside. This will be represented as a list of data. The following information will be displayed:
+
+    • tenants who live in room
+    • The room number
+    • carpet/floor
+    • walls
+    • bottom trim
+    • upper trim
+    • closet doors
+    • closet trim
+    • window
+    • window sill
+    • outlets and electrical
+    • ceiling
+    • entry door
+    • entry door casing/trim
+    • stoppers
+    • ceiling light/fan
+    • smoke detector
+    • blinds
+
+The user will be able to click on each of these data points and view the information from the inputs. The room data will either link to an information page or AJAX will be used to display the form inputs on the room page. In addition, the user will be able to view the cost to replace each item and the condition they are in (excluding the tenant information).
+
+If time allows, the form input page will contain as many categories as I can get through. Most likely it will just be installation/upgrade:
+
+    • installation/upgrade
+    • maintenance required
+    • tenant profile
+    • incident reports
