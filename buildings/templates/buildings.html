@@ -42,43 +42,14 @@
             <ul class="box">
                 <header> {{ template_name }}'s {{ template_title }}
                 </header>
-{#                <li>#}
-{#                    <a href='#'>#}
-{#                        <img src="../static/images/apartment.png" width=50px;>#}
-{#                        Building 1#}
-{#                    </a>#}
-{#                </li>#}
-{#                <li>#}
-{#                    <a href='#'>#}
-{#                        <img src="../static/images/apartment.png" width=50px;>#}
-{#                        Building 2#}
-{#                    </a>#}
-{#                </li>#}
-{#                <li>#}
-{#                    <a href='#'>#}
-{#                        <img src="../static/images/apartment.png" width=50px;/>#}
-{#                        Building 3#}
-{#                    </a>#}
-{#                </li>#}
-{#                <li>#}
-{#                    <a href='#'>#}
-{#                        <img src="../static/images/apartment.png" width=50px;/>#}
-{#                            Building 4#}
-{#                    </a>#}
-{#                </li>#}
-{#                <li>#}
-{#                    <a href='#'>#}
-{#                        <img src="../static/images/apartment.png" width=50px;>#}
-{#                        Building 5#}
-{#                    </a>#}
-{#                </li>#}
-{#                <li>#}
-{#                    <a href='#'>#}
-{#                        <img src="../static/images/apartment.png" width=50px;>#}
-{#                        Building 6#}
-{#                    </a>#}
-{#                </li>#}
-{##}
+                {% for item in template_buildings %}
+                    <li>
+                        <a>
+                            <img src="../static/images/apartment.png" width=50px;>
+                            {{ item }}
+                        </a>
+                    </li>
+                {% endfor %}
 
             </ul>
         </section>

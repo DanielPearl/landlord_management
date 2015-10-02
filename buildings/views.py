@@ -3,16 +3,17 @@ from .models import *
 from .forms import BuildingForm
 
 
-# Create your views here.
-
 def buildings(request):
     if request.user.is_authenticated():
         title = "Buildings"
-        name = "Manager" #models.Manager.user.first_name
+        name = request.user.first_name + " " + request.user.last_name
+
+        building_icons = Building.objects.all()
 
     context = {
         "template_title": title,
         "template_name": name,
+        "template_buildings": building_icons,
     }
     return render(request, 'buildings.html', context)
 

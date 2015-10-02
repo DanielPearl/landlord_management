@@ -19,7 +19,7 @@ class Manager(models.Model):
     phone_number = models.IntegerField()
 
     def __str__(self):
-        return self.user.first_name
+        return self.user.first_name + " " + self.user.last_name
 
 class Building(models.Model):
     id = models.AutoField(primary_key=True)
