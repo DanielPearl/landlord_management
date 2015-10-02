@@ -1,13 +1,7 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 # Create your models here.
-class Login(models.Model):
-    username = models.CharField(max_length=30)
-    password = models.CharField(max_length=50)
-
-    def __str__(self):
-        return self.username
-
 class Address(models.Model):
     street_number = models.IntegerField()
     street_name = models.CharField(max_length=30)
@@ -16,22 +10,22 @@ class Address(models.Model):
     state = models.CharField(max_length=20)
     zip_code = models.IntegerField()
 
+    def __str__(self):
+        return str(self.street_number)
+
 class Manager(models.Model):
-    username = models.CharField(max_length=30)
-    address_id = models.OneToOneField(Address)
-    manager_name = models.CharField(max_length=30)
+    user = models.OneToOneField(User)
     start_date = models.DateField()
     phone_number = models.IntegerField()
-    email = models.CharField(max_length=30)
 
     def __str__(self):
-        return self.manager_name
+        return self.user.first_name
 
 class Building(models.Model):
+    id = models.AutoField(primary_key=True)
     manager_id = models.ManyToManyField(Manager)
     address_id = models.ForeignKey(Address)
     building_name = models.CharField(max_length=30)
-    occupancy = models.IntegerField()
     build_date = models.DateField()
 
     def __str__(self):
@@ -41,6 +35,7 @@ class Unit(models.Model):
     building_id = models.ForeignKey(Building)
     unit_number = models.CharField(max_length=30)
     parking_space = models.CharField(max_length=30)
+    is_rented = models.BooleanField(default=False)
 
     def __str__(self):
         return self.unit_number
@@ -48,6 +43,9 @@ class Unit(models.Model):
 class Tenant(models.Model):
     unit_id = models.ForeignKey(Unit)
     tenant_name = models.CharField(max_length=100)
+    image = models.ImageField(upload_to='static/images', height_field=None,
+                              width_field=None, max_length=100,
+                              default=None)
     phone_number = models.IntegerField()
     email = models.EmailField(max_length=50)
     move_in = models.DateField()
@@ -86,4 +84,3 @@ class Item_Detail(models.Model):
     date = models.DateField()
     cost = models.FloatField()
     install_duration = models.IntegerField()
-

@@ -2,45 +2,60 @@ body{
     background-color: #2A363B;
 }
 
-h1{
+h1 {
+    color: white;
     text-align: center;
-    font-family: 'Cabin Sketch';}
+    font-family: 'Raleway', sans-serif;
+    font-size: 40px;
+}
 
-h2{
-    text-align: center;
+h2,header{
+    font-family: 'Raleway 20px' , sans-serif;
+    font-size: 20px;
+}
+
+article{
+    margin-bottom: 20px;
+}
+
+section nav{
     font-family: 'Architects Daughter';
-    font-size: 25px;
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+div nav{
+    text-align: left;
+    font-size: 20px;
 }
 
-nav{
-    text-align: left;
-}
 nav a{
     color:black;
     text-decoration:none;
     text-align: center;
     display: inline-block;
     width: 20%;
-    background-color: #FECEA8;
+    height:30px;
+    background-color: blanchedalmond;
     padding: 2px;
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
     margin-right: 2px;
+    font-size: 18px;
     font-family: 'Architects Daughter';
-    font-size: 20px;
 }
 
-nav a:hover{
-    background-color: #99B898;
+ul a{
+    text-align: center;
+    text-decoration:none;
+    color: #2A363B;
+    font-family: 'Raleway', sans-serif;
+
 }
 
-span{
+ul li{
     display:inline-block;
     width:100px;
-    padding:1em;
-    margin:1em;
     border-radius:10px;
-    text-align: center;
     color:black;
 }
 
@@ -48,33 +63,74 @@ label{
     word-wrap: break-word;
     text-align: center;
     display:block;
-    width: auto;
+    width: 200px;
 
 }
 
+a:hover{
+    background-color: blueviolet;
+    color:white;
+}
 .top{
     color: white;
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
-    margin:0px;
-    padding-top: 5px;
-
 }
-.alerts{T
-    color:white;
-    background-color: #E84A5F;
+
+.alerts{
+    color:#E84A5F;
+    background-color: white;
     padding: 10px;
-    border-bottom-left-radius: 10px;
-    border-bottom-right-radius: 10px;
+    border-radius: 10px;
 }
 
 .items{
-    background-color: #FECEA8;
+    background-color: blanchedalmond;
     border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    border-bottom-left-radius: 10px;
     padding: 10px;
 }
 
 .box{
     display: inline-block;
+    width:75%;
+    margin-top:30px;
     text-align: center;
 }
+
+.box li{
+    margin:20px;
+}
+.new {
+    width: 50px;
+    font-size: 13px;
+    padding: 7px;
+    color: blanchedalmond;
+    background-color: #2A363B;
+    border-radius: 10px;
+    display: inline-block;
+    text-align: center;
+    text-decoration: none;
+    font-family: 'Raleway', sans-serif;
+}
+ .tenants, .vendors{
+    background-color: #E84A5F;
+}
+
+ .managers{
+    background-color: #99B898;
+ }
+
+ .vertnav{
+     display: inline-block;
+     width:50px;
+     vertical-align: top;
+     margin:5px;
+ }
+
+ .vertnav a{
+     height:50px;
+     margin:5px;
+     text-align: center;
+ }

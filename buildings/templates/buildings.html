@@ -1,82 +1,96 @@
 <!DOCTYPE html>
+{% load staticfiles %}
+
 <html>
 
 <head>
     <title> Landlord Program </title>
-    <link rel="stylesheet" type="text/css" href="../static/css/styles.css">
+    <link rel="stylesheet" type="text/css" href="{% static '../static/css/styles.css' %}">
     <link href='https://fonts.googleapis.com/css?family=Architects+Daughter' rel='stylesheet' type='text/css'>
     <link href='https://fonts.googleapis.com/css?family=Cabin+Sketch' rel='stylesheet' type='text/css'>
-</head>
+    <link href='https://fonts.googleapis.com/css?family=Slabo+27px|Raleway' rel='stylesheet' type='text/css'></head>
 
 <body>
     <div class="top">
         <h1> Landlord Management </h1>
 
         <nav class="nav">
-            <a class='buildings' href='#'> Buildings </a>
+            <a class='buildings' href='#'> Structures </a>
             <a class='tenants' href='#'> Tenants </a>
+            <a class='managers' href='#'> Managers </a>
+            <a class='vendors' href='#'> Vendors </a>
         </nav>
     </div>
     <article class="items">
         <section>
-            <header>
-                <h2> Buildings </h2>
-            </header>
-            <ul class="box">
-                <span>
-                    <a href='#'>
-                        <img src="../static/images/apartment.png" width=50px;>
-                        Building 1
-                    </a>
-                </span>
-                <span>
-                    <a href='#'>
-                        <img src="../static/images/apartment.png" width=50px;>
-                        Building 2
-                    </a>
-                </span>
-                <span>
-                    <a href='#'>
-                        <img src="../static/images/apartment.png" width=50px;/>
-                        Building 3
-                    </a>
-                </span>
-                <span>
-                    <a href='#'>
-                        <img src="../static/images/apartment.png" width=50px;/>
-                        <label>
-                            Building 4Building 4Building
-                        </label>
-                    </a>
-                </span>
-                <span>
-                    <a href='#'>
-                        <img src="../static/images/apartment.png" width=50px;>
-                        Building 5
-                    </a>
-                </span>
-                <span>
-                    <a href='#'>
-                        <img src="../static/images/apartment.png" width=50px;>
-                        Building 6
-                    </a>
-                </span>
+            <nav class="vertnav">
 
+                <a href='building_form.html' class="new">
+                    Create new building
+                </a>
+                <a href='#' class="new">
+                    Remove existing building
+                </a>
+                 <a href='#' class="new">
+                    Create new Item
+                </a>
+                <a href='#' class="new">
+                    Update existing Item
+                </a>
+            </nav>
+
+            <ul class="box">
+                <header> {{ template_name }}'s {{ template_title }}
+                </header>
+{#                <li>#}
+{#                    <a href='#'>#}
+{#                        <img src="../static/images/apartment.png" width=50px;>#}
+{#                        Building 1#}
+{#                    </a>#}
+{#                </li>#}
+{#                <li>#}
+{#                    <a href='#'>#}
+{#                        <img src="../static/images/apartment.png" width=50px;>#}
+{#                        Building 2#}
+{#                    </a>#}
+{#                </li>#}
+{#                <li>#}
+{#                    <a href='#'>#}
+{#                        <img src="../static/images/apartment.png" width=50px;/>#}
+{#                        Building 3#}
+{#                    </a>#}
+{#                </li>#}
+{#                <li>#}
+{#                    <a href='#'>#}
+{#                        <img src="../static/images/apartment.png" width=50px;/>#}
+{#                            Building 4#}
+{#                    </a>#}
+{#                </li>#}
+{#                <li>#}
+{#                    <a href='#'>#}
+{#                        <img src="../static/images/apartment.png" width=50px;>#}
+{#                        Building 5#}
+{#                    </a>#}
+{#                </li>#}
+{#                <li>#}
+{#                    <a href='#'>#}
+{#                        <img src="../static/images/apartment.png" width=50px;>#}
+{#                        Building 6#}
+{#                    </a>#}
+{#                </li>#}
+{##}
 
             </ul>
         </section>
 
-    </article>
-    <article class="alerts">
-        <section >
-            <header>
-                <h2> </h2>
-            </header>
-            <!-- <ul>
-
-            </ul> -->
-        </section>
-    </article>
+{#    </article>#}
+{#    <article class="alerts">#}
+{#        <section>#}
+{#            <!-- <ul>#}
+{##}
+{#            </ul> -->#}
+{#        </section>#}
+{#    </article>#}
 </body>
 
 </html>

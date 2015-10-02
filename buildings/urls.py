@@ -1,11 +1,11 @@
 from django.conf.urls import include, url
-from django.contrib import admin
+from buildings import views
 
 urlpatterns = [
     # Examples:
     # url(r'^$', 'landlord_mgmt.views.home', name='home'),
     # url(r'^blog/', include('blog.urls')),
 
-    url(r'^admin/', include(admin.site.urls)),
-    url(r'^buildings/', include('buildings.urls', namespace="buildings")),
+    url(r'^$', views.buildings, name="buildings"),
+    url(r'^building_form', views.building_form, name="building_form")
 ]

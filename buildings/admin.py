@@ -1,8 +1,8 @@
 from django.contrib import admin
 from .models import *
+from .forms import Building
 
 # Register your models here.
-admin.site.register(Login)
 admin.site.register(Address)
 admin.site.register(Manager)
 admin.site.register(Building)
