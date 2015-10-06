@@ -10,8 +10,11 @@ h1 {
 }
 
 h2,header{
-    font-family: 'Raleway 20px' , sans-serif;
-    font-size: 20px;
+    font-family: 'Special Elite', cursive;
+    font-size: 1.2em;
+    margin-right: 20px;
+    margin-left: 20px;
+
 }
 
 article{
@@ -19,7 +22,7 @@ article{
 }
 
 section nav{
-    font-family: 'Architects Daughter';
+    font-family: 'Architects Daughter', cursive;
     font-size: 20px;
     margin-bottom: 10px;
 }
@@ -42,7 +45,7 @@ nav a{
     border-top-right-radius: 10px;
     margin-right: 2px;
     font-size: 18px;
-    font-family: 'Architects Daughter';
+    font-family: 'Architects Daughter', cursive;
 }
 
 /* Apartment icons */
@@ -50,18 +53,23 @@ ul a{
     text-align: center;
     text-decoration:none;
     color: #2A363B;
-    font-family: 'Raleway', sans-serif;
-
+    font-family: 'Special Elite', cursive;
+    font-size: 1em;
 }
 
 ul li{
     display:inline-block;
     width:100px;
-    border-radius:10px;
     color:black;
+    overflow: hidden;
 }
 
 img{
+    margin-left: 20px;
+    margin-right: 20px;
+    display: inline-block;
+    text-align: center;
+    width: 3em;
 }
 
 label{
@@ -69,7 +77,15 @@ label{
     text-align: center;
     display:block;
     width: 200px;
+}
 
+section{
+    height:100%
+}
+ul{
+    padding:0px;
+    display:inline-block;
+    text-align: center;
 }
 
 a:hover{
@@ -98,10 +114,12 @@ a:hover{
 }
 
 .box{
+    vertical-align: top;
+    width: 80%;
     display: inline-block;
-    width:75%;
     margin-top:30px;
     text-align: center;
+    margin:10px;
 }
 
 .box li{
@@ -133,9 +151,10 @@ a:hover{
  /* Side navigation parent vertical align */
  .vertnav{
      display: inline-block;
-     width:50px;
+     width:10%;
      vertical-align: top;
      margin:5px;
+     height:100%;
  }
 
  /* Side bar buttons */

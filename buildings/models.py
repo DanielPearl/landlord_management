@@ -11,7 +11,9 @@ class Address(models.Model):
     zip_code = models.IntegerField()
 
     def __str__(self):
-        return str(self.street_number)
+        return str(self.street_number) + " " + self.street_name + ", #" + \
+            self.unit_number + ", " + self.city + ", " + self.state + " " + \
+               str(self.zip_code)
 
 class Manager(models.Model):
     user = models.OneToOneField(User)
@@ -38,7 +40,7 @@ class Unit(models.Model):
     is_rented = models.BooleanField(default=False)
 
     def __str__(self):
-        return self.unit_number
+        return self.building_id.building_name + ", #" + self.unit_number
 
 class Tenant(models.Model):
     unit_id = models.ForeignKey(Unit)
@@ -58,7 +60,8 @@ class Room(models.Model):
     room_name = models.CharField(max_length=30)
 
     def __str__(self):
-        return self.room_name
+        return self.unit_id.building_id.building_name + ", #" + \
+               self.unit_id.unit_number + ", " + self.room_name
 
 class Vendor(models.Model):
     vendor_name = models.CharField(max_length=30)
@@ -76,7 +79,9 @@ class Item(models.Model):
     item_description = models.CharField(max_length=30)
 
     def __str__(self):
-        return self.item_description
+        return self.room_id.unit_id.building_id.building_name + " #" + \
+               self.room_id.unit_id.unit_number + ", " + \
+               self.room_id.room_name + ", " + self.item_description
 
 class Item_Detail(models.Model):
     item_id = models.ManyToManyField(Item)
