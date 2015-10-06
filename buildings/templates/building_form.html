@@ -7,14 +7,9 @@
 </head>
 <h1>{{ form_title }}</h1>
 
-{#{{ user }}#}
-
-{{ request.user.first_name }}
-
 <form method='POST' action='/buildings/building_form/'>{% csrf_token %}
     {{ form.as_p }}
-
-<input type="submit" value='submit'/>
+    <input type="submit" value='submit'/>
 </form>
 
 </html>

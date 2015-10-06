@@ -11,4 +11,4 @@ class BuildingForm(forms.ModelForm):
 class UnitForm(forms.ModelForm):
     class Meta:
         model = Unit
-        fields = ['unit_number', 'parking_space', 'is_rented']
+        fields = ['building_id','unit_number', 'parking_space', 'is_rented']

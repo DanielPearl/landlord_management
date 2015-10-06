@@ -18,7 +18,7 @@
 
         <nav class="nav">
             {# Horizontal top navigation #}
-            <a class='buildings' href='#'> Structures </a>
+            <a class='buildings' href="{% url 'buildings:buildings' %}"> Structures </a>
             <a class='tenants' href='#'> Tenants </a>
             <a class='managers' href='#'> Managers </a>
             <a class='vendors' href='#'> Vendors </a>
@@ -51,10 +51,8 @@
 
                 {# Populate page with building database #}
                 {% for unit in template_units %}
-                    <li>
+                    <li class = 'units'>
                         <a href= "#"> {# "{% url 'units:rooms' unit %}"> #}
-                            <img src="../../static/images/apartment.png"
-                                 width=50px;>
                             {{ unit }}
                         </a>
                     </li>
@@ -63,7 +61,7 @@
             </ul>
         </section>
 
-    </article>#}
+    </article>
 {#    <article class="alerts">#}
 {#        <section>#}
 {#            <!-- <ul>#}

@@ -40,7 +40,7 @@ class Unit(models.Model):
     is_rented = models.BooleanField(default=False)
 
     def __str__(self):
-        return self.building_id.building_name + ", #" + self.unit_number
+        return "unit #" + self.unit_number
 
 class Tenant(models.Model):
     unit_id = models.ForeignKey(Unit)

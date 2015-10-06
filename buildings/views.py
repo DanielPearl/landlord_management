@@ -40,14 +40,16 @@ def units(request, building_name): #unit page
 
 def building_form(request): #building form page
     title = "Add Building"
-    form = BuildingForm()
+    form = BuildingForm() #use fields in BuildingForm from forms.py
 
-    if request.method == 'POST': #if page is submitted
+    #if page is submitted, save form as BuildingForm
+    if request.method == 'POST':
         form = BuildingForm(request.POST)
-        if form.is_valid(): #if input is valid
-            print("here")
-            form.save() #save input into database
 
+        #if input is valid, save form into database
+        if form.is_valid():
+            print("here")
+            form.save()
         else:
             print("else")
         return HttpResponseRedirect("/buildings/") #return to building page
@@ -58,23 +60,26 @@ def building_form(request): #building form page
         }
         return render(request, 'building_form.html', context)
 
-def unit_form(request, building_name): #building form page
-    title = "Add Unit"
-    form = UnitForm()
+def unit_form(request): #building form page
+    unit_title = "Add Unit"
+    unit_form = UnitForm() #use fields in UnitForm from forms.py
 
-    if request.method == 'POST': #if page is submitted
+    #if page is submitted
+    if request.method == 'POST':
         form = UnitForm(request.POST)
-        if form.is_valid(): #if input is valid
+
+        #if input is valid
+        if form.is_valid():
             print("here")
             form.save() #save input into database
         else:
             print("else")
 
-        units = Unit.objects.filter(building_id__building_name=building_name)
-        return HttpResponseRedirect("/units/") #return to building page
+        return HttpResponseRedirect("/buildings/") #return to building
+        # page
     else:
         context = {
-            "form": form, #save form in key within context
-            "form_title": title #save form title in key within context
+            "unit_form": unit_form, #save form in key within context
+            "unit_title": unit_title #save form title in key within context
         }
         return render(request, 'unit_form.html', context)
