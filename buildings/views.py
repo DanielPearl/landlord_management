@@ -38,7 +38,6 @@ def units(request, building_name):
         context = { # Dictionary used by template
             "template_units": units,
             "template_building": title,
-
         }
     return render(request, 'units.html', context)
 
@@ -47,7 +46,7 @@ def rooms(request, building_name, unit_number):
     if request.user.is_authenticated():
 
         # sets name equal to name attribute in building model
-        title = building_name + " " + unit_number
+        title = building_name + ", #" + unit_number
 
         # sets list to everything saved in unit object
         rooms = Room.objects.filter(
@@ -131,7 +130,7 @@ def room_form(request, building_name, unit_number): #building form page
         context = {
             "unit_form": room_form, #save form in key within context
             "unit_title": room_title, #save form title in key within context
-            "building_name": building_name
+            "unit_name": building_name + unit_number
         }
         return render(request, 'room_form.html', context)
 

@@ -60,8 +60,7 @@ class Room(models.Model):
     room_name = models.CharField(max_length=30)
 
     def __str__(self):
-        return self.unit_id.building_id.building_name + ", #" + \
-               self.unit_id.unit_number + ", " + self.room_name
+        return self.room_name
 
 class Vendor(models.Model):
     vendor_name = models.CharField(max_length=30)

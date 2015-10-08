@@ -30,7 +30,7 @@
             <nav class="vertnav">
 
                 {# Vertical side navigation #}
-                <a href="{% url 'buildings:room_form' template_name %}" class="new">
+                <a href="{% url 'buildings:room_form' template_title %}" class="new">
                     Create new room
                 </a>
                 <a href='#' class="new">
@@ -44,7 +44,7 @@
                 {# Create page title #}
                 <header>
                     <h2>
-                    {{ template_rooms }}
+                    {{ template_title }}
                     </h2>
                 </header>
 
@@ -52,6 +52,7 @@
                 {% for room in template_rooms %}
                     <li class = 'rooms'>
                         <a href= "#"> {# "{% url 'units:rooms' unit %}"> #}
+                            <img src="../../../../static/images/window-frame.png" width=50px;>
                             {{ room }}
                         </a>
                     </li>
