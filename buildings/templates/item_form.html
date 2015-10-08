@@ -1,0 +1,8 @@
+<h1>{{ item_title }}</h1>
+
+{#{{ user }}#}
+
+<form method='POST' action='/buildings/item_form/'>{% csrf_token %}
+    {{ item_form.as_p }}
+    <input type="submit" value='submit'/>
+</form>

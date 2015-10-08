@@ -12,6 +12,7 @@
     <link href='https://fonts.googleapis.com/css?family=Cabin+Sketch' rel='stylesheet' type='text/css'>
     <link href='https://fonts.googleapis.com/css?family=Slabo+27px|Raleway' rel='stylesheet' type='text/css'></head>
     <link href='https://fonts.googleapis.com/css?family=Special+Elite' rel='stylesheet' type='text/css'><body>
+
     <div class="top">
         {# Page title #}
         <h1> Landlord Management </h1>
@@ -29,16 +30,13 @@
             <nav class="vertnav">
 
                 {# Vertical side navigation #}
-                <a href="{% url 'buildings:unit_form' template_building %}"
-                   class="new">
-                    Create new unit
+                <a href="{% url 'buildings:room_form' template_name %}" class="new">
+                    Create new room
                 </a>
                 <a href='#' class="new">
-                    Remove existing unit
+                    Remove existing room
                 </a>
-                 <a href='#' class="new">
-                    Create new Item
-                </a>
+
             </nav>
 
             <ul class="box">
@@ -46,16 +44,15 @@
                 {# Create page title #}
                 <header>
                     <h2>
-                    {{ template_building }}
+                    {{ template_rooms }}
                     </h2>
                 </header>
 
                 {# Populate page with building database #}
-                {% for unit in template_units %}
-                    <li class = 'units'>
-                        <a href= "
-                        {% url 'buildings:rooms' template_building unit.unit_number %}">
-                            {{ unit }}
+                {% for room in template_rooms %}
+                    <li class = 'rooms'>
+                        <a href= "#"> {# "{% url 'units:rooms' unit %}"> #}
+                            {{ room }}
                         </a>
                     </li>
                 {% endfor %}

@@ -1,7 +1,5 @@
 from django import forms
-from .models import Building
-from .models import Address
-from .models import Unit
+from .models import *
 
 class BuildingForm(forms.ModelForm):
     class Meta:
@@ -11,4 +9,14 @@ class BuildingForm(forms.ModelForm):
 class UnitForm(forms.ModelForm):
     class Meta:
         model = Unit
-        fields = ['building_id','unit_number', 'parking_space', 'is_rented']
+        fields = ['unit_number', 'parking_space', 'is_rented']
+
+class ItemForm(forms.ModelForm):
+    class Meta:
+        model = Item
+        fields = ['room_id','item_description']
+
+class RoomForm(forms.ModelForm):
+    class Meta:
+        model = Room
+        fields = ['room_name','room_name']

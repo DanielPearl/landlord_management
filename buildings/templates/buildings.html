@@ -36,7 +36,7 @@
                 <a href='#' class="new">
                     Remove existing building
                 </a>
-                 <a href='#' class="new">
+                 <a href="{% url 'buildings:item_form' %}" class="new">
                     Create new Item
                 </a>
             </nav>
@@ -51,12 +51,12 @@
                 </header>
 
                 {# Populate page with building database #}
-                {% for item in template_buildings %}
+                {% for building in template_buildings %}
                     <li class = "buildings">
                         <a href= "
-                        {% url 'buildings:units' item.building_name %}">
+                        {% url 'buildings:units' building.building_name %}">
                             <img src="../static/images/apartment.png" width=50px;>
-                            {{ item }}
+                            {{ building }}
                         </a>
                     </li>
                 {% endfor %}
