@@ -55,6 +55,8 @@ def rooms(request, building_name, unit_number):
         context = { # Dictionary used by template
             "template_rooms": rooms,
             "template_title": title,
+            "building_name": building_name,
+            "unit_number": unit_number,
         }
     return render(request, 'rooms.html', context)
 
@@ -91,12 +93,11 @@ def unit_form(request, building_name): #building form page
         #if page is submitted
     if request.method == 'POST':
         form = UnitForm(request.POST)
-        # print('we got to post')
+
         #if input is valid
         if form.is_valid():
             post = form.save(commit=False)
             post.building_id = Building.objects.get(building_name=building_name)
-            # print(post.building_id)
             post.save() #save input into database
 
         #return to previous page
@@ -112,28 +113,29 @@ def unit_form(request, building_name): #building form page
 def room_form(request, building_name, unit_number): #building form page
     room_title = "Add Unit"
     room_form = RoomForm() #use fields in UnitForm from forms.py
-        #if page is submitted
-    if request.method == 'POST':
-        form = RoomForm(request.POST)
-        # print('we got to post')
+    #     #if page is submitted
 
-        #if input is valid
-        # if form.is_valid():
+    if request.method == 'POST':
+        print('post')
+        form = RoomForm(request.POST)
+
+        #if form.is_valid():
         post = form.save(commit=False)
         post.unit_id = Unit.objects.get(unit_number=unit_number)
-        # print(post.building_id)
         post.save() #save input into database
 
         #return to previous page
         return HttpResponseRedirect("/buildings/units/rooms/" + building_name + "/" + unit_number)
     else:
+        print('no post')
         context = {
-            "unit_form": room_form, #save form in key within context
-            "unit_title": room_title, #save form title in key within context
-            "unit_name": building_name + unit_number
+            "room_form": room_form, #save form in key within context
+            "room_title": room_title, #save form title in key within context
+            "room_name": building_name + unit_number,
+            "building_name": building_name,
+            "unit_number": unit_number,
         }
         return render(request, 'room_form.html', context)
-
 
 #Item Form
 def item_form(request): #building form page
