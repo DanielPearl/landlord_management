@@ -166,8 +166,9 @@ a:hover{
      text-align: center;
  }
 
- /* style for units page links */
- ul .units, .item_style{
+ /* style for units & items page links */
+ ul .units, .items_style{
+     display: inline-block;
      text-align: center;
      width:150px;
      margin:5px;

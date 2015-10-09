@@ -2,7 +2,7 @@
 
 {#{{ user }}#}
 
-<form method='POST' action='/buildings/item_form/'>{% csrf_token %}
+<form method='POST' action='/buildings/units/rooms/items/item_form/{{ building_name }}/{{ unit_number }}/{{ room_name }}/'>{% csrf_token %}
     {{ item_form.as_p }}
     <input type="submit" value='submit'/>
 </form>

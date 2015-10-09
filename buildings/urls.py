@@ -9,9 +9,9 @@ urlpatterns = [
     # Unit
     url(r'^units/unit_form/([\w\s]+)', views.unit_form, name="unit_form"),
     # Room
-    url(r'^units/rooms/room_form/(?P<building_name>[\w\s]+)/(?P<unit_number>[\d]+)', views.room_form, name="room_form"),
+    url(r'^units/rooms/room_form/(?P<building_name>[\w\s]+)/(?P<unit_number>[\w\d]+)', views.room_form, name="room_form"),
     # Item
-    url(r'^item_form', views.item_form, name="item_form"),
+    url(r'^units/rooms/items/item_form/(?P<building_name>[\w\s]+)/(?P<unit_number>[\w\d]+)/(?P<room_name>[\w\s\d]+)', views.item_form, name="item_form"),
 
 # -------------------------------Pages----------------------------------
 

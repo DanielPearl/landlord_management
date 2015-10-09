@@ -30,7 +30,7 @@
             <nav class="vertnav">
 
                 {# Vertical side navigation #}
-                <a href="#" {#"{% url 'buildings:item_form' building_name unit_number %}" #} class="new">
+                <a href="{% url 'buildings:item_form' building_name unit_number room_name%}" class="new">
                     Create new item
                 </a>
                 <a href='#' class="new">
@@ -50,11 +50,11 @@
 
                 {# Populate page with building database #}
                 {% for item in template_items %}
-                    <li class = 'items_style'>
+                    <p class = 'items_style'>
                         <a href= "#"> {# "{% url 'units:rooms' unit %}"> #}
                             {{ item }}
                         </a>
-                    </li>
+                    </p>
                 {% endfor %}
 
             </ul>

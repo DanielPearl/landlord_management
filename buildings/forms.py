@@ -14,7 +14,7 @@ class UnitForm(forms.ModelForm):
 class ItemForm(forms.ModelForm):
     class Meta:
         model = Item
-        fields = ['room_id','item_description']
+        fields = ['item_description']
 
 class RoomForm(forms.ModelForm):
     class Meta:
