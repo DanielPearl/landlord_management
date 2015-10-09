@@ -50,7 +50,7 @@ def rooms(request, building_name, unit_number):
 
         # sets list to everything saved in unit object
         rooms = Room.objects.filter(
-            unit_id__building_id__building_name=building_name)
+            unit_id__unit_number=unit_number,unit_id__building_id__building_name=building_name)
 
         context = { # Dictionary used by template
             "template_rooms": rooms,
@@ -60,6 +60,25 @@ def rooms(request, building_name, unit_number):
         }
     return render(request, 'rooms.html', context)
 
+#Rooms Page
+def items(request, building_name, unit_number, room_name):
+    if request.user.is_authenticated():
+
+        # sets name equal to name attribute in building model
+        title = building_name + ", #" + unit_number + ", " + room_name
+
+        # sets list to everything saved in unit object
+        items = Item.objects.filter(
+            room_id__room_name=room_name,room_id__unit_id__unit_number=unit_number, room_id__unit_id__building_id__building_name=building_name)
+
+        context = { # Dictionary used by template
+            "template_items": items,
+            "template_title": title,
+            "building_name": building_name,
+            "unit_number": unit_number,
+            "room_name": room_name,
+        }
+    return render(request, 'items.html', context)
 
 """---------------------------------------------------------------------------
                                 Forms

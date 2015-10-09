@@ -51,7 +51,7 @@
                 {# Populate page with building database #}
                 {% for room in template_rooms %}
                     <li class = 'rooms'>
-                        <a href= "#"> {# "{% url 'units:rooms' unit %}"> #}
+                        <a href= "{% url 'buildings:items' building_name unit_number room.room_name %}"> {# "{% url 'units:rooms' unit %}"> #}
                             <img src="../../../../static/images/window-frame.png" width=50px;>
                             {{ room }}
                         </a>

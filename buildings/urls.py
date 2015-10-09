@@ -17,6 +17,8 @@ urlpatterns = [
 
     #Building
     url(r'^$', views.buildings, name="buildings"),
+    #Items
+    url(r'^units/rooms/items/(?P<building_name>[\w\s]+)/(?P<unit_number>[\w\s\d]+)/(?P<room_name>[\w\s\d]+)', views.items, name="items"),
     #Room
     url(r'^units/rooms/(?P<building_name>[\w\s]+)/(?P<unit_number>[\w\s\d]+)', views.rooms, name="rooms"),
     #Unit

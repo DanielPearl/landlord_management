@@ -80,9 +80,7 @@ class Item(models.Model):
     item_description = models.CharField(max_length=30)
 
     def __str__(self):
-        return self.room_id.unit_id.building_id.building_name + " #" + \
-               self.room_id.unit_id.unit_number + ", " + \
-               self.room_id.room_name + ", " + self.item_description
+        return self.item_description
 
 class Item_Detail(models.Model):
     item_id = models.ManyToManyField(Item)

@@ -167,7 +167,7 @@ a:hover{
  }
 
  /* style for units page links */
- ul .units{
+ ul .units, .item_style{
      text-align: center;
      width:150px;
      margin:5px;
