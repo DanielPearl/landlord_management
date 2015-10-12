@@ -1,6 +1,17 @@
 from django import forms
 from .models import *
 
+
+class Login(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ['username', 'password' ]
+
+class Signup(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ['first_name', 'last_name', 'email', 'username', 'password']
+
 class BuildingForm(forms.ModelForm):
     class Meta:
         model = Building
@@ -17,6 +28,7 @@ class ItemForm(forms.ModelForm):
         fields = ['item_description']
 
 class RoomForm(forms.ModelForm):
-    class Meta:
-        model = Room
-        fields = ['room_name','room_name']
+     class Meta:
+         model = Room
+         fields = ['room_name','room_name']
+

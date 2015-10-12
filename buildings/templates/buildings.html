@@ -36,8 +36,8 @@
                 <a href='#' class="new">
                     Remove existing building
                 </a>
-{#                 <a href="{% url 'buildings:item_form' %}" class="new">#}
-{#                    Create new Item#}
+{#                <a href="{% url 'buildings:general_form' %}" class="new">#}
+{#                    Enter room#}
 {#                </a>#}
             </nav>
 
@@ -46,12 +46,12 @@
                 {# Create page title #}
                 <header>
                     <h2>
-                    {{ template_name }}'s {{ template_title }}
+                    {{ manager_name }}'s {{ title }}
                     </h2>
                 </header>
 
                 {# Populate page with building database #}
-                {% for building in template_buildings %}
+                {% for building in buildings %}
                     <li class = "buildings">
                         <a href= "
                         {% url 'buildings:units' building.building_name %}">

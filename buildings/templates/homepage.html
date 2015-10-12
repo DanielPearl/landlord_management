@@ -12,14 +12,14 @@
     <link href='https://fonts.googleapis.com/css?family=Cabin+Sketch' rel='stylesheet' type='text/css'>
     <link href='https://fonts.googleapis.com/css?family=Slabo+27px|Raleway' rel='stylesheet' type='text/css'></head>
     <link href='https://fonts.googleapis.com/css?family=Special+Elite' rel='stylesheet' type='text/css'><body>
-
     <div class="top">
         {# Page title #}
         <h1> Landlord Management </h1>
 
         <nav class="nav">
             {# Horizontal top navigation #}
-            <a class='buildings' href="{% url 'buildings:buildings' %}"> Structures </a>
+            <a class='buildings' href="{% url 'buildings:buildings' %}">
+                Structures </a>
             <a class='tenants' href='#'> Tenants </a>
             <a class='managers' href='#'> Managers </a>
             <a class='vendors' href='#'> Vendors </a>
@@ -30,13 +30,15 @@
             <nav class="vertnav">
 
                 {# Vertical side navigation #}
-                <a href="{% url 'buildings:room_form' building_name unit_number %}" class="new">
-                    Create new room
+                <a href="{% url 'buildings:building_form' %}" class="new">
+                    Create new building
                 </a>
                 <a href='#' class="new">
-                    Remove existing room
+                    Remove existing building
                 </a>
-
+{#                 <a href="{% url 'buildings:item_form' %}" class="new">#}
+{#                    Create new Item#}
+{#                </a>#}
             </nav>
 
             <ul class="box">
@@ -44,16 +46,17 @@
                 {# Create page title #}
                 <header>
                     <h2>
-                    {{ title }}
+                    {{ manager_name }}'s {{ title }}
                     </h2>
                 </header>
 
                 {# Populate page with building database #}
-                {% for room in rooms %}
-                    <li class = 'rooms'>
-                        <a href= "{% url 'buildings:items' building_name unit_number room.room_name %}"> {# "{% url 'units:rooms' unit %}"> #}
-                            <img src="../../../../static/images/window-frame.png" width=50px;>
-                            {{ room }}
+                {% for building in buildings %}
+                    <li class = "buildings">
+                        <a href= "
+                        {% url 'buildings:units' building.building_name %}">
+                            <img src="../static/images/apartment.png" width=50px;>
+                            {{ building }}
                         </a>
                     </li>
                 {% endfor %}

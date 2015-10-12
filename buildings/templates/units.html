@@ -29,7 +29,7 @@
             <nav class="vertnav">
 
                 {# Vertical side navigation #}
-                <a href="{% url 'buildings:unit_form' template_building %}"
+                <a href="{% url 'buildings:unit_form' building_name %}"
                    class="new">
                     Create new unit
                 </a>
@@ -46,15 +46,15 @@
                 {# Create page title #}
                 <header>
                     <h2>
-                    {{ template_building }}
+                    {{ building_name }}
                     </h2>
                 </header>
 
                 {# Populate page with building database #}
-                {% for unit in template_units %}
+                {% for unit in units %}
                     <li class = 'units'>
                         <a href= "
-                        {% url 'buildings:rooms' template_building unit.unit_number %}">
+                        {% url 'buildings:rooms' building_name unit.unit_number %}">
                             {{ unit }}
                         </a>
                     </li>

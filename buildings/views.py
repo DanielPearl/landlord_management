@@ -16,12 +16,12 @@ def buildings(request):
         name = request.user.first_name + " " + request.user.last_name
 
         # sets building_icons to everything saved in building object
-        building_icons = Building.objects.all()
+        buildings = Building.objects.all()
 
     context = { # Dictionary used by template
-        "template_title": title,
-        "template_name": name,
-        "template_buildings": building_icons,
+        "title": title,
+        "manager_name": name,
+        "buildings": buildings,
     }
     return render(request, 'buildings.html', context)
 
@@ -29,15 +29,12 @@ def buildings(request):
 def units(request, building_name):
     if request.user.is_authenticated():
 
-        # sets name equal to name attribute in building model
-        title = building_name
-
         # sets list to everything saved in unit object
         units = Unit.objects.filter(building_id__building_name=building_name)
-        # print(units)
+
         context = { # Dictionary used by template
-            "template_units": units,
-            "template_building": title,
+            "units": units,
+            "building_name": building_name,
         }
     return render(request, 'units.html', context)
 
@@ -53,8 +50,8 @@ def rooms(request, building_name, unit_number):
             unit_id__unit_number=unit_number,unit_id__building_id__building_name=building_name)
 
         context = { # Dictionary used by template
-            "template_rooms": rooms,
-            "template_title": title,
+            "title": title,
+            "rooms": rooms,
             "building_name": building_name,
             "unit_number": unit_number,
         }
@@ -129,6 +126,7 @@ def unit_form(request, building_name): #building form page
         }
         return render(request, 'unit_form.html', context)
 
+#Room Form
 def room_form(request, building_name, unit_number): #building form page
     room_title = "Add Unit"
     room_form = RoomForm() #use fields in UnitForm from forms.py
@@ -140,7 +138,7 @@ def room_form(request, building_name, unit_number): #building form page
 
         #if form.is_valid():
         post = form.save(commit=False)
-        post.unit_id = Unit.objects.get(unit_number=unit_number)
+        post.unit_id = Unit.objects.get(building_id__building_name=building_name, unit_number=unit_number)
         post.save() #save input into database
 
         #return to previous page
@@ -150,7 +148,6 @@ def room_form(request, building_name, unit_number): #building form page
         context = {
             "room_form": room_form, #save form in key within context
             "room_title": room_title, #save form title in key within context
-            "room_name": building_name + unit_number,
             "building_name": building_name,
             "unit_number": unit_number,
         }
