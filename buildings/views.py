@@ -1,7 +1,84 @@
 from django.shortcuts import render
 from .models import *
 from .forms import *
-from django.http import HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect
+from django.contrib.auth import authenticate, login
+
+
+"""---------------------------------------------------------------------------
+                                Authentication
+---------------------------------------------------------------------------"""
+def login_user(request):
+    if request.method == 'POST':
+
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+
+        user = authenticate(username=username, password=password)
+
+        if user:
+            if user.is_active:
+                login(request, user)
+                return HttpResponseRedirect('/buildings/')
+            else:
+                return HttpResponse("Invalid account")
+        else:
+            print("Invalid login information")
+            return HttpResponse("Invalid login information")
+    else:
+        return render(request, 'homepage.html')
+
+def Register(request):
+    registered = False
+    if request.method == 'POST':
+        user_form = Login(data=request.POST)
+        manager_form = Manager(data=request.POST)
+
+        if user_form.is_valid() and manager_form.is_valid():
+            user = user_form.save()
+            user.set_password(user.password)
+            user.save()
+
+            manager = manager_form.save(commit=False)
+            manager.user = user
+
+            manager.save()
+            registered = True
+
+            return HttpResponseRedirect("/buildings/")
+        else:
+            print(user_form.errors, manager_form.errors)
+    else:
+        user_form = Login()
+        manager_form = Manager()
+
+    return render(request, 'homepage.html', {'user_form':user_form, 'manager_form':manager_form, 'registered': registered})
+
+# def login(request): #building form page
+#     title = "Login"
+#     form = Login() #use fields in BuildingForm from forms.py
+#     username = request.POST['username']
+#     password = request.POST['password']
+#
+#     user = authenticate(username=username, password=password)
+#
+#     #if page is submitted, save form as BuildingForm
+#     if user is not None:
+#         if user.is_active:
+#             if form.is_valid():
+#                 login(request, user)
+#                 return HttpResponseRedirect(("/buildings/"))
+#         else:
+#             context = {
+#                 "form": form, #save form in key within context
+#                 "form_title": title #save form title in key within context
+#             }
+#         return render(request, 'homepage.html', context)
+
+def logout(request):
+    logout(request)
+    return render(request, 'homepage.html')
+
 
 
 """---------------------------------------------------------------------------
@@ -82,30 +159,35 @@ def items(request, building_name, unit_number, room_name):
 ---------------------------------------------------------------------------"""
 #Building Form
 def building_form(request): #building form page
-    title = "Add Building"
-    form = BuildingForm() #use fields in BuildingForm from forms.py
+    building_title = "Add Building"
+    building_form = BuildingForm() #use fields in BuildingForm from forms.py
+    address_form = AddressForm()
 
     #if page is submitted, save form as BuildingForm
     if request.method == 'POST':
-        form = BuildingForm(request.POST)
+        building_form = BuildingForm(request.POST)
+        address_form = AddressForm(request.POST)
 
         #if input is valid, save form into database
-        if form.is_valid():
-            form.save()
+        if building_form.is_valid() and address_form.is_valid():
+            building_form.save()
+            address_form.save()
 
         #return to previous page
         return HttpResponseRedirect("/buildings/") #return to building page
     else:
+        #save form title in key within context
         context = {
-            "form": form, #save form in key within context
-            "form_title": title #save form title in key within context
+            "address_form": address_form,
+            "building_form": building_form, #save form in key within context
+            "building_title": building_title,
         }
         return render(request, 'building_form.html', context)
 
 #Unit Form
 def unit_form(request, building_name): #building form page
     unit_title = "Add Unit"
-    unit_form = UnitForm() #use fields in UnitForm from forms.py
+    unit_form = UnitForm() #use fields in UnitForm f        s.py
         #if page is submitted
     if request.method == 'POST':
         form = UnitForm(request.POST)

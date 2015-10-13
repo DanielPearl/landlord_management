@@ -23,5 +23,7 @@ urlpatterns = [
     url(r'^units/(?P<building_name>[\w\s]+)', views.units, name="units"),
     #Building page
     url(r'^$', views.buildings, name="buildings"),
+    #Homepage
+    url(r'^login', views.login_user, name="login_user"),
 
 ]

@@ -33,8 +33,6 @@ class Building(models.Model):
     def __str__(self):
         return self.building_name
 
-
-
 class Unit(models.Model):
     building_id = models.ForeignKey(Building)
     unit_number = models.CharField(max_length=30)
