@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+
+<html>
+
+<head>
+    <title> Landlord Program </title>
+
+    {# Fonts loaded onto page #}
+    <link rel="stylesheet" type="text/css" href="{% static '../static/css/styles.css' %}">
+    <link href='https://fonts.googleapis.com/css?family=Architects+Daughter' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Cabin+Sketch' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Slabo+27px|Raleway' rel='stylesheet' type='text/css'></head>
+    <link href='https://fonts.googleapis.com/css?family=Special+Elite' rel='stylesheet' type='text/css'><body>
+    <div class="top">
+        {# Page title #}
+        <h1> Landlord Management </h1>
+
+
+        <nav class="nav">
+            {# Horizontal top navigation #}
+            <a class='buildings' href="{% url 'buildings:buildings' %}"> Structures </a>
+            <a class='tenants' href='#'> Tenants </a>
+            <a class='managers' href='#'> Managers </a>
+            <a class='vendors' href='#'> Vendors </a>
+        </nav>
+
+    </div>
+    <article class="items">
+        <a class='logout' href="{% url 'logout' %}">
+            logout
+        </a>
+        {% block content %}
+        {% endblock %}
+    </article>
+{#    <article class="alerts">#}
+{#        <section>#}
+{#            <!-- <ul>#}
+{##}
+{#            </ul> -->#}
+{#        </section>#}
+{#    </article>#}
+</body>
+
+</html>

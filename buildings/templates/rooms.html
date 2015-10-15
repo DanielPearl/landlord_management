@@ -1,68 +1,46 @@
-<!DOCTYPE html>
-{% load staticfiles %}
+{% extends "base.html" %}
 
-<html>
+{% block content %}
+    <section>
+        <nav class="vertnav">
 
-<head>
-    <title> Landlord Program </title>
+            {# Vertical side navigation #}
+            <a href="{% url 'buildings:room_form' building_name unit_number %}" class="new">
+                Create new room
+            </a>
+            <a href='#' class="new">
+                Remove existing room
+            </a>
 
-    {# Fonts loaded onto page #}
-    <link rel="stylesheet" type="text/css" href="{% static '../static/css/styles.css' %}">
-    <link href='https://fonts.googleapis.com/css?family=Architects+Daughter' rel='stylesheet' type='text/css'>
-    <link href='https://fonts.googleapis.com/css?family=Cabin+Sketch' rel='stylesheet' type='text/css'>
-    <link href='https://fonts.googleapis.com/css?family=Slabo+27px|Raleway' rel='stylesheet' type='text/css'></head>
-    <link href='https://fonts.googleapis.com/css?family=Special+Elite' rel='stylesheet' type='text/css'><body>
-
-    <div class="top">
-        {# Page title #}
-        <h1> Landlord Management </h1>
-
-        <nav class="nav">
-            {# Horizontal top navigation #}
-            <a class='buildings' href="{% url 'buildings:buildings' %}"> Structures </a>
-            <a class='tenants' href='#'> Tenants </a>
-            <a class='managers' href='#'> Managers </a>
-            <a class='vendors' href='#'> Vendors </a>
         </nav>
-    </div>
-    <article class="items">
-        <section>
-            <nav class="vertnav">
 
-                {# Vertical side navigation #}
-                <a href="{% url 'buildings:room_form' building_name unit_number %}" class="new">
-                    Create new room
-                </a>
-                <a href='#' class="new">
-                    Remove existing room
-                </a>
+        <ul class="box">
 
-            </nav>
+            {# Create page title #}
+            <header>
+                <h2>
+                    <a href="{% url 'buildings:units' building_name %}">{{building_name}}</a>,
+                    #{{ unit_number }}
+                </h2>
+            </header>
 
-            <ul class="box">
-
-                {# Create page title #}
-                <header>
-                    <h2>
-                        <a href="{% url 'buildings:units' building_name %}">{{building_name}}</a>,
-                        #{{ unit_number }}
-                    </h2>
-                </header>
-
-                {# Populate page with building database #}
-                {% for room in rooms %}
-                    <li class = 'rooms'>
-                        <a href= "{% url 'buildings:items' building_name unit_number room.room_name %}"> {# "{% url 'units:rooms' unit %}"> #}
+            {# Populate page with building database #}
+            {% for room in rooms %}
+                <li class = 'rooms'>
+                    <a href= "{% url 'buildings:items' building_name unit_number room.room_name %}"> {# "{% url 'units:rooms' unit %}"> #}
+                        {% if room_name == "kitchen" or "bathroom" or "living room" or "study" or "dining room" %}
+                            <img src="../../../../static/images/{{ room }}.png" width=50px;>
+                        {% else %}
                             <img src="../../../../static/images/window-frame.png" width=50px;>
-                            {{ room }}
-                        </a>
-                    </li>
-                {% endfor %}
+                        {% endif%}
+                        {{ room }}
+                    </a>
+                </li>
+            {% endfor %}
 
-            </ul>
-        </section>
+        </ul>
+    </section>
 
-    </article>
 {#    <article class="alerts">#}
 {#        <section>#}
 {#            <!-- <ul>#}
@@ -70,6 +48,5 @@
 {#            </ul> -->#}
 {#        </section>#}
 {#    </article>#}
-</body>
 
-</html>
+{% endblock %}

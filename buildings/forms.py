@@ -20,7 +20,7 @@ class AddressForm(forms.ModelForm):
 class BuildingForm(forms.ModelForm):
     class Meta:
         model = Building
-        fields = ['building_name', 'address_id', 'build_date']
+        fields = ['building_name', 'build_date']
 
 class UnitForm(forms.ModelForm):
     class Meta:

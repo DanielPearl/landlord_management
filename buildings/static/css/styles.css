@@ -128,6 +128,12 @@ a:hover{
     margin:20px;
 }
 
+.logout:hover, .box a:hover{
+    color:blueviolet;
+    background-color: transparent;
+    font-weight: bold;
+}
+
 /* Side navigation */
 .new {
     width: 50px;
@@ -172,4 +178,14 @@ a:hover{
      text-align: center;
      width:150px;
      margin:5px;
+ }
+
+ .logout{
+     display:block;
+     horiz-align: right;
+     text-align: right;
+     margin-bottom: 0px;
+     text-decoration: none;
+     font-family: 'Special Elite', cursive;
+
  }

@@ -2,7 +2,7 @@ from django.shortcuts import render
 from .models import *
 from .forms import *
 from django.http import HttpResponse, HttpResponseRedirect
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 
 
 """---------------------------------------------------------------------------
@@ -14,19 +14,30 @@ def login_user(request):
         username = request.POST.get('username')
         password = request.POST.get('password')
 
+        # user authentication for username & password
         user = authenticate(username=username, password=password)
 
+        #If user is registered
         if user:
             if user.is_active:
+                #login user
                 login(request, user)
+                #redirect to buildings page
                 return HttpResponseRedirect('/buildings/')
             else:
+                #logout user if user is not valid
+                logout_user(request)
                 return HttpResponse("Invalid account")
         else:
-            print("Invalid login information")
-            return HttpResponse("Invalid login information")
+            #invalid message when info is incorrect
+            return PermissionError("Nope")
     else:
-        return render(request, 'homepage.html')
+        #if user is authenticated go to buildings page
+        if request.user.is_authenticated():
+            return HttpResponseRedirect('/buildings/')
+        #if not authenticated stay on homepage
+        else:
+            return render(request, 'homepage.html')
 
 def Register(request):
     registered = False
@@ -54,30 +65,9 @@ def Register(request):
 
     return render(request, 'homepage.html', {'user_form':user_form, 'manager_form':manager_form, 'registered': registered})
 
-# def login(request): #building form page
-#     title = "Login"
-#     form = Login() #use fields in BuildingForm from forms.py
-#     username = request.POST['username']
-#     password = request.POST['password']
-#
-#     user = authenticate(username=username, password=password)
-#
-#     #if page is submitted, save form as BuildingForm
-#     if user is not None:
-#         if user.is_active:
-#             if form.is_valid():
-#                 login(request, user)
-#                 return HttpResponseRedirect(("/buildings/"))
-#         else:
-#             context = {
-#                 "form": form, #save form in key within context
-#                 "form_title": title #save form title in key within context
-#             }
-#         return render(request, 'homepage.html', context)
-
-def logout(request):
+def logout_user(request):
     logout(request)
-    return render(request, 'homepage.html')
+    return HttpResponseRedirect('/')
 
 
 
@@ -86,21 +76,25 @@ def logout(request):
 ---------------------------------------------------------------------------"""
 #Building Page
 def buildings(request):
+    print("## Entering buildings request function.")
     if request.user.is_authenticated():
         title = "Buildings"
+
+        # sets building_icons to everything saved in building object
+        buildings = Building.objects.filter(manager_id__user=request.user)
 
         # sets name equal to name attribute in user model
         name = request.user.first_name + " " + request.user.last_name
 
-        # sets building_icons to everything saved in building object
-        buildings = Building.objects.all()
-
-    context = { # Dictionary used by template
-        "title": title,
-        "manager_name": name,
-        "buildings": buildings,
-    }
-    return render(request, 'buildings.html', context)
+        context = { # Dictionary used by template
+            "title": title,
+            "manager_name": name,
+            "buildings": buildings,
+        }
+        return render(request, 'buildings.html', context)
+    else:
+        logout_user(request)
+        return HttpResponseRedirect('/')
 
 #Units Page
 def units(request, building_name):
@@ -113,7 +107,10 @@ def units(request, building_name):
             "units": units,
             "building_name": building_name,
         }
-    return render(request, 'units.html', context)
+        return render(request, 'units.html', context)
+    else:
+        logout_user(request)
+        return HttpResponseRedirect('/')
 
 #Rooms Page
 def rooms(request, building_name, unit_number):
@@ -132,7 +129,10 @@ def rooms(request, building_name, unit_number):
             "building_name": building_name,
             "unit_number": unit_number,
         }
-    return render(request, 'rooms.html', context)
+        return render(request, 'rooms.html', context)
+    else:
+        logout_user(request)
+        return HttpResponseRedirect('/')
 
 #Rooms Page
 def items(request, building_name, unit_number, room_name):
@@ -152,7 +152,10 @@ def items(request, building_name, unit_number, room_name):
             "unit_number": unit_number,
             "room_name": room_name,
         }
-    return render(request, 'items.html', context)
+        return render(request, 'items.html', context)
+    else:
+        logout_user(request)
+        return HttpResponseRedirect('/')
 
 """---------------------------------------------------------------------------
                                 Forms
@@ -170,11 +173,20 @@ def building_form(request): #building form page
 
         #if input is valid, save form into database
         if building_form.is_valid() and address_form.is_valid():
-            building_form.save()
-            address_form.save()
+            #building_form.save()
+            print("valid")
+            address = address_form.save()
 
-        #return to previous page
-        return HttpResponseRedirect("/buildings/") #return to building page
+            post = building_form.save(commit=False)
+            post.address_id = address
+            post.save() #save input into database
+            username = Manager.objects.get(user=request.user)
+            post.manager_id.add(username)
+            print(request.user)
+            post.save() #save input into database
+
+            #return to previous page
+            return HttpResponseRedirect("/buildings/") #return to building page
     else:
         #save form title in key within context
         context = {
@@ -187,7 +199,7 @@ def building_form(request): #building form page
 #Unit Form
 def unit_form(request, building_name): #building form page
     unit_title = "Add Unit"
-    unit_form = UnitForm() #use fields in UnitForm f        s.py
+    unit_form = UnitForm() #use fields in UnitForm fs.py
         #if page is submitted
     if request.method == 'POST':
         form = UnitForm(request.POST)
@@ -210,7 +222,7 @@ def unit_form(request, building_name): #building form page
 
 #Room Form
 def room_form(request, building_name, unit_number): #building form page
-    room_title = "Add Unit"
+    room_title = "Add Room"
     room_form = RoomForm() #use fields in UnitForm from forms.py
     #     #if page is submitted
 
@@ -237,7 +249,7 @@ def room_form(request, building_name, unit_number): #building form page
 
 #Item Form
 def item_form(request, building_name, unit_number, room_name): #building form page
-    item_title = "Add Unit"
+    item_title = "Add Item"
     item_form = ItemForm() #use fields in UnitForm from forms.py
     #     #if page is submitted
 
@@ -246,7 +258,7 @@ def item_form(request, building_name, unit_number, room_name): #building form pa
 
         #if form.is_valid():
         post = form.save(commit=False)
-        post.room_id = Room.objects.get(room_name=room_name)
+        post.room_id = Room.objects.get(unit_id__building_id__building_name=building_name, unit_id__unit_number=unit_number, room_name=room_name)
         post.save() #save input into database
 
         #return to previous page

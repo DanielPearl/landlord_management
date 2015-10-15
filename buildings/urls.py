@@ -14,7 +14,6 @@ urlpatterns = [
     url(r'^units/rooms/items/item_form/(?P<building_name>[\w\s]+)/(?P<unit_number>[\w\d]+)/(?P<room_name>[\w\s\d]+)', views.item_form, name="item_form"),
 
 # -------------------------------Pages----------------------------------
-
     #Items page
     url(r'^units/rooms/items/(?P<building_name>[\w\s]+)/(?P<unit_number>[\w\s\d]+)/(?P<room_name>[\w\s\d]+)', views.items, name="items"),
     #Room page
@@ -22,8 +21,8 @@ urlpatterns = [
     #Unit page
     url(r'^units/(?P<building_name>[\w\s]+)', views.units, name="units"),
     #Building page
+    # url(r'^buildings/', views.buildings, name="buildings"),
+    #Building/Homepage
     url(r'^$', views.buildings, name="buildings"),
-    #Homepage
-    url(r'^login', views.login_user, name="login_user"),
 
 ]
