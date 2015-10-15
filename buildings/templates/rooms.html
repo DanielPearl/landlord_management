@@ -1,4 +1,6 @@
 {% extends "base.html" %}
+{% load static %}
+{% get_static_prefix as static_prefix %}
 
 {% block content %}
     <section>
@@ -28,10 +30,10 @@
             {% for room in rooms %}
                 <li class = 'rooms'>
                     <a href= "{% url 'buildings:items' building_name unit_number room.room_name %}"> {# "{% url 'units:rooms' unit %}"> #}
-                        {% if room_name == "kitchen" or "bathroom" or "living room" or "study" or "dining room" %}
+                        {% if room == "bedroom" or "kitchen" or "bathroom" or "living room" or "study" or "dining room" %}
                             <img src="../../../../static/images/{{ room }}.png" width=50px;>
                         {% else %}
-                            <img src="../../../../static/images/window-frame.png" width=50px;>
+                            <img src="{% static 'images/window-frame.png' %}" width=50px;>
                         {% endif%}
                         {{ room }}
                     </a>
