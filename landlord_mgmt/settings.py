@@ -86,19 +86,34 @@ USE_L10N = True
 USE_TZ = True
 
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/1.8/howto/static-files/
+# Parse database configuration from $DATABASE_URL
+import dj_database_url
 
-STATIC_URL = '/static/'
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'landlord_mgmt',
+        'USER': 'pearld',
+        'PASSWORD': 'gigo',
+        'HOST': 'localhost',
+        'PORT': '',
+    }
+}
 
-##################
-# LOCAL SETTINGS #
-##################
+DATABASES['default'] =  dj_database_url.config()
 
-# Allow any settings to be defined in local_settings.py which should be
-# ignored in your version control system allowing for settings to be
-# defined per machine.
-try:
-    from .local_settings import *
-except ImportError:
-    pass
+# Honor the 'X-Forwarded-Proto' header for request.is_secure()
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
+# Allow all host headers
+ALLOWED_HOSTS = ['*']
+
+# Static asset configuration
+import os
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+
+STATIC_ROOT = 'staticfiles'
+
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'static'),
+)
