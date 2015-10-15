@@ -30,7 +30,7 @@
             {% for room in rooms %}
                 <li class = 'rooms'>
                     <a href= "{% url 'buildings:items' building_name unit_number room.room_name %}"> {# "{% url 'units:rooms' unit %}"> #}
-                        {% if room == "bedroom" or "kitchen" or "bathroom" or "living room" or "study" or "dining room" %}
+                        {% if room == "bedroom" or room == "kitchen" or room == "bathroom" or room == "living room" or room == "study" or room == "dining room" %}
                             <img src="../../../../static/images/{{ room }}.png" width=50px;>
                         {% else %}
                             <img src="{% static 'images/window-frame.png' %}" width=50px;>

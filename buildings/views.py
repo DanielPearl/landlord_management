@@ -102,10 +102,13 @@ def units(request, building_name):
 
         # sets list to everything saved in unit object
         units = Unit.objects.filter(building_id__building_name=building_name)
+        building = Building()
+        # building_date = Unit.objects.filter(building_id__build_date=building_name)
 
         context = { # Dictionary used by template
             "units": units,
             "building_name": building_name,
+            # "building_date": building_date
         }
         return render(request, 'units.html', context)
     else:
@@ -200,10 +203,10 @@ def building_form(request): #building form page
 def unit_form(request, building_name): #building form page
     unit_title = "Add Unit"
     unit_form = UnitForm() #use fields in UnitForm fs.py
-        #if page is submitted
+
+    #if page is submitted
     if request.method == 'POST':
         form = UnitForm(request.POST)
-
         #if input is valid
         if form.is_valid():
             post = form.save(commit=False)
@@ -216,7 +219,7 @@ def unit_form(request, building_name): #building form page
         context = {
             "unit_form": unit_form, #save form in key within context
             "unit_title": unit_title, #save form title in key within context
-            "building_name": building_name
+            "building_name": building_name,
         }
         return render(request, 'unit_form.html', context)
 

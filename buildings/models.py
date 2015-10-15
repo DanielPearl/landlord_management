@@ -28,7 +28,7 @@ class Building(models.Model):
     manager_id = models.ManyToManyField(Manager)
     address_id = models.ForeignKey(Address)
     building_name = models.CharField(max_length=30)
-    build_date = models.DateField()
+    build_date = models.DateField(blank=True)
 
     def __str__(self):
         return self.building_name
