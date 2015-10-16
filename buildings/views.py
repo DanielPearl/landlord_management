@@ -23,7 +23,7 @@ def login_user(request):
             return HttpResponseRedirect('/buildings/')
         #if user is not registered
         else:
-            logout_user(request, user)
+            logout_user(request)
             return HttpResponse("Invalid user")
     else:
         if request.user.is_authenticated():
@@ -43,6 +43,7 @@ def register_form(request):
         user_form = UserForm(data = request.POST)
         manager_form = ManagerForm(data = request.POST)
 
+        #if user and manager fields are valid
         if user_form.is_valid() and manager_form.is_valid():
             user = user_form.save()
             user.set_password(user.password)
@@ -53,6 +54,7 @@ def register_form(request):
             manager.save()
             registered = True
             return HttpResponseRedirect("/buildings/") #return to building page
+        #if user and manager fields are not valid
         else:
             print(user_form.errors, manager_form.errors)
     else:
