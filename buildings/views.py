@@ -35,32 +35,55 @@ def login_user(request):
 #Register Form
 def register_form(request):
     register_title = "Register"
-    user_form = RegisterForm()
-    manager_form = ManagerForm()
+    registered = False
 
     #if form is submitted, save user and manager info
     if request.method == 'POST':
-        user_form = RegisterForm(request.POST)
-        manager_form = ManagerForm(request.POST)
+        #user = User.objects.create_user('john', 'lennon@thebeatles.com', 'johnpassword')
+        user_form = UserForm(data = request.POST)
+        manager_form = ManagerForm(data = request.POST)
 
-        #if input is valid
         if user_form.is_valid() and manager_form.is_valid():
             user = user_form.save()
-            #user.set_password(user.password)
+            user.set_password(user.password)
+            user.save()
 
-            post = manager_form.save(commit=False)
-            post.user = user
-            post.save() #save input into database
-
-            #return to buildings page
+            manager = manager_form.save(commit=False)
+            manager.user = user
+            manager.save()
+            registered = True
             return HttpResponseRedirect("/buildings/") #return to building page
+        else:
+            print(user_form.errors, manager_form.errors)
     else:
-        context = {
-            "user_form":user_form,
-            "manager_form":manager_form,
-            "register_title": register_title
-        }
-        return render(request, 'register_form.html', context)
+        user_form = UserForm()
+        manager_form = ManagerForm()
+
+    context = {
+        'register_title': register_title,
+        'user_form': user_form,
+        'manager_form': manager_form,
+        'registered': registered
+    }
+    return render(request, 'register_form.html', context)
+
+    #     if user_form.is_valid() and manager_form.is_valid():
+    #         user = user_form.save()
+    #         #user.set_password(user.password)
+    #
+    #         post = manager_form.save(commit=False)
+    #         post.user = user
+    #         post.save() #save input into database
+    #
+    #         #return to buildings page
+    #         return HttpResponseRedirect("/buildings/") #return to building page
+    # else:
+    #     context = {
+    #         "user_form":user_form,
+    #         "manager_form":manager_form,
+    #         "register_title": register_title
+    #     }
+    #     return render(request, 'register_form.html', context)
 
 def logout_user(request):
     logout(request)
