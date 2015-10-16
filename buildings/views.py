@@ -9,6 +9,7 @@ from django.contrib.auth import authenticate, login, logout
                                 Authentication
 ---------------------------------------------------------------------------"""
 def login_user(request):
+    logout_user(request)
     if request.method == 'POST':
 
         username = request.POST.get('username')
@@ -23,8 +24,7 @@ def login_user(request):
             return HttpResponseRedirect('/buildings/')
         #if user is not registered
         else:
-            logout_user(request)
-            return HttpResponse("Invalid user")
+            return HttpResponse("Invalid login info")
     else:
         if request.user.is_authenticated():
             return HttpResponseRedirect('/buildings/')
@@ -57,6 +57,7 @@ def register_form(request):
         #if user and manager fields are not valid
         else:
             print(user_form.errors, manager_form.errors)
+    #if form has not been submitted
     else:
         user_form = UserForm()
         manager_form = ManagerForm()
@@ -69,24 +70,6 @@ def register_form(request):
     }
     return render(request, 'register_form.html', context)
 
-    #     if user_form.is_valid() and manager_form.is_valid():
-    #         user = user_form.save()
-    #         #user.set_password(user.password)
-    #
-    #         post = manager_form.save(commit=False)
-    #         post.user = user
-    #         post.save() #save input into database
-    #
-    #         #return to buildings page
-    #         return HttpResponseRedirect("/buildings/") #return to building page
-    # else:
-    #     context = {
-    #         "user_form":user_form,
-    #         "manager_form":manager_form,
-    #         "register_title": register_title
-    #     }
-    #     return render(request, 'register_form.html', context)
-
 def logout_user(request):
     logout(request)
     return HttpResponseRedirect('/')
@@ -97,7 +80,6 @@ def logout_user(request):
 ---------------------------------------------------------------------------"""
 #Building Page
 def buildings(request):
-    print("## Entering buildings request function.")
     if request.user.is_authenticated():
         title = "Buildings"
 
@@ -122,7 +104,7 @@ def units(request, building_name):
     if request.user.is_authenticated():
 
         # sets list to everything saved in unit object
-        units = Unit.objects.filter(building_id__building_name=building_name)
+        units = Unit.objects.filter(building_id__manager_id__user=request.user, building_id__building_name=building_name)
         # building_date = Unit.objects.filter(building_id__build_date=building_name)
 
         context = { # Dictionary used by template
@@ -143,8 +125,8 @@ def rooms(request, building_name, unit_number):
         title = building_name + ", #" + unit_number
 
         # sets list to everything saved in unit object
-        rooms = Room.objects.filter(
-            unit_id__unit_number=unit_number,unit_id__building_id__building_name=building_name)
+        rooms = Room.objects.filter(unit_id__building_id__manager_id__user=request.user,
+            unit_id__unit_number=unit_number, unit_id__building_id__building_name=building_name)
 
         context = { # Dictionary used by template
             "title": title,
@@ -165,7 +147,7 @@ def items(request, building_name, unit_number, room_name):
         title = building_name + ", #" + unit_number + ", " + room_name
 
         # sets list to everything saved in unit object
-        items = Item.objects.filter(
+        items = Item.objects.filter(room_id__unit_id__building_id__manager_id__user=request.user,
             room_id__room_name=room_name,room_id__unit_id__unit_number=unit_number, room_id__unit_id__building_id__building_name=building_name)
 
         context = { # Dictionary used by template
