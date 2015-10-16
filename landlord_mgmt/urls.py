@@ -11,6 +11,7 @@ urlpatterns = [
     # url(r'^$', include('buildings.urls', namespace="none")),
     url(r'^$', 'buildings.views.login_user', name='login'),
     url(r'^logout/', 'buildings.views.logout_user', name='logout'),
+    url(r'^register/', 'buildings.views.register_form', name='register'),
     url(r'^buildings/', include('buildings.urls', namespace="buildings"))
 
 ]
