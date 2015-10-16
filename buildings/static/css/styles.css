@@ -87,6 +87,10 @@ ul{
     display:inline-block;
     text-align: center;
 }
+.buildings, .rooms, .items{
+    display: inline-block;
+    vertical-align: top;
+}
 
 a:hover{
     background-color: blueviolet;

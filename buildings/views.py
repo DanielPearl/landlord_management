@@ -18,57 +18,53 @@ def login_user(request):
         user = authenticate(username=username, password=password)
 
         #If user is registered
-        if user:
-            if user.is_active:
-                #login user
-                login(request, user)
-                #redirect to buildings page
-                return HttpResponseRedirect('/buildings/')
-            else:
-                #logout user if user is not valid
-                logout_user(request)
-                return HttpResponse("Invalid account")
+        if user and user.is_active:
+            login(request, user)
+            return HttpResponseRedirect('/buildings/')
+        #if user is not registered
         else:
-            #invalid message when info is incorrect
-            return PermissionError("Nope")
+            logout_user(request, user)
+            return HttpResponse("Invalid user")
     else:
-        #if user is authenticated go to buildings page
         if request.user.is_authenticated():
             return HttpResponseRedirect('/buildings/')
         #if not authenticated stay on homepage
         else:
             return render(request, 'homepage.html')
 
-def Register(request):
-    registered = False
-    if request.method == 'POST':
-        user_form = Login(data=request.POST)
-        manager_form = Manager(data=request.POST)
+#Register Form
+def register_form(request):
+    register_title = "Register"
+    user_form = RegisterForm()
+    manager_form = ManagerForm()
 
+    #if form is submitted, save user and manager info
+    if request.method == 'POST':
+        user_form = RegisterForm(request.POST)
+        manager_form = ManagerForm(request.POST)
+
+        #if input is valid
         if user_form.is_valid() and manager_form.is_valid():
             user = user_form.save()
-            user.set_password(user.password)
-            user.save()
+            #user.set_password(user.password)
 
-            manager = manager_form.save(commit=False)
-            manager.user = user
+            post = manager_form.save(commit=False)
+            post.user = user
+            post.save() #save input into database
 
-            manager.save()
-            registered = True
-
-            return HttpResponseRedirect("/buildings/")
-        else:
-            print(user_form.errors, manager_form.errors)
+            #return to buildings page
+            return HttpResponseRedirect("/buildings/") #return to building page
     else:
-        user_form = Login()
-        manager_form = Manager()
-
-    return render(request, 'homepage.html', {'user_form':user_form, 'manager_form':manager_form, 'registered': registered})
+        context = {
+            "user_form":user_form,
+            "manager_form":manager_form,
+            "register_title": register_title
+        }
+        return render(request, 'register_form.html', context)
 
 def logout_user(request):
     logout(request)
     return HttpResponseRedirect('/')
-
 
 
 """---------------------------------------------------------------------------
@@ -102,7 +98,6 @@ def units(request, building_name):
 
         # sets list to everything saved in unit object
         units = Unit.objects.filter(building_id__building_name=building_name)
-        building = Building()
         # building_date = Unit.objects.filter(building_id__build_date=building_name)
 
         context = { # Dictionary used by template
@@ -169,7 +164,7 @@ def building_form(request): #building form page
     building_form = BuildingForm() #use fields in BuildingForm from forms.py
     address_form = AddressForm()
 
-    #if page is submitted, save form as BuildingForm
+    #if form is submitted, save building and address info
     if request.method == 'POST':
         building_form = BuildingForm(request.POST)
         address_form = AddressForm(request.POST)
@@ -177,18 +172,17 @@ def building_form(request): #building form page
         #if input is valid, save form into database
         if building_form.is_valid() and address_form.is_valid():
             #building_form.save()
-            print("valid")
             address = address_form.save()
 
             post = building_form.save(commit=False)
             post.address_id = address
             post.save() #save input into database
+
             username = Manager.objects.get(user=request.user)
             post.manager_id.add(username)
-            print(request.user)
             post.save() #save input into database
 
-            #return to previous page
+            #return to buildings page
             return HttpResponseRedirect("/buildings/") #return to building page
     else:
         #save form title in key within context
@@ -275,3 +269,13 @@ def item_form(request, building_name, unit_number, room_name): #building form pa
             "room_name": room_name
         }
         return render(request, 'item_form.html', context)
+
+
+"""---------------------------------------------------------------------------
+                                Deletions
+---------------------------------------------------------------------------"""
+
+def delete_building(request, building_name):
+    Building.objects.filter(building_name=building_name).delete()
+
+

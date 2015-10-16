@@ -20,9 +20,13 @@ urlpatterns = [
     url(r'^units/rooms/(?P<building_name>[\w\s]+)/(?P<unit_number>[\w\s\d]+)', views.rooms, name="rooms"),
     #Unit page
     url(r'^units/(?P<building_name>[\w\s]+)', views.units, name="units"),
+
     #Building page
     # url(r'^buildings/', views.buildings, name="buildings"),
+
     #Building/Homepage
     url(r'^$', views.buildings, name="buildings"),
+    #Register page
+    url(r'^register', views.register_form, name="register")
 
 ]

@@ -7,10 +7,15 @@ class Login(forms.ModelForm):
         model = User
         fields = ['username', 'password']
 
-class Signup(forms.ModelForm):
+class RegisterForm(forms.ModelForm):
     class Meta:
         model = User
         fields = ['first_name', 'last_name', 'email', 'username', 'password']
+
+class ManagerForm(forms.ModelForm):
+    class Meta:
+        model = Manager
+        fields = ['phone_number', 'start_date']
 
 class AddressForm(forms.ModelForm):
     class Meta:
