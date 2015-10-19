@@ -2,4 +2,5 @@
 .idea/
 *.pyc
 __pycache__/
-landlord_mgmt/local_settings.py 
+landlord_mgmt/local_settings.py
+venv 
