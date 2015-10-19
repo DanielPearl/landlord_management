@@ -37,6 +37,11 @@ class ItemForm(forms.ModelForm):
         model = Item
         fields = ['item_description']
 
+class ItemDetailsForm(forms.ModelForm):
+    class Meta:
+        model = Item_Detail
+        fields = ['vendor_info', 'date', 'cost', 'install_duration']
+
 class RoomForm(forms.ModelForm):
      class Meta:
          model = Room

@@ -139,7 +139,7 @@ def rooms(request, building_name, unit_number):
         logout_user(request)
         return HttpResponseRedirect('/')
 
-#Rooms Page
+#Items Page
 def items(request, building_name, unit_number, room_name):
     if request.user.is_authenticated():
 
@@ -151,13 +151,38 @@ def items(request, building_name, unit_number, room_name):
             room_id__room_name=room_name,room_id__unit_id__unit_number=unit_number, room_id__unit_id__building_id__building_name=building_name)
 
         context = { # Dictionary used by template
-            "template_items": items,
-            "template_title": title,
+            "items": items,
+            "item_title": title,
             "building_name": building_name,
             "unit_number": unit_number,
             "room_name": room_name,
         }
         return render(request, 'items.html', context)
+    else:
+        logout_user(request)
+        return HttpResponseRedirect('/')
+
+#Item Detail Page
+def item_details(request, building_name, unit_number, room_name, item_description):
+    if request.user.is_authenticated():
+
+        # sets name equal to name attribute in building model
+        title = building_name + ", #" + unit_number + ", " + room_name + ", " + item_description
+
+        # sets list to everything saved in unit object
+        item_details = Item_Detail.objects.filter(item_id__room_id__unit_id__building_id__manager_id__user=request.user,
+                                                  item_id__item_description=item_description,
+            item_id__room_id__room_name=room_name,item_id__room_id__unit_id__unit_number=unit_number,item_id__room_id__unit_id__building_id__building_name=building_name)
+
+        context = { # Dictionary used by template
+            "item_details": item_details,
+            "item_detail_title": title,
+            "building_name": building_name,
+            "unit_number": unit_number,
+            "room_name": room_name,
+            "item_description": item_description
+        }
+        return render(request, 'item_details.html', context)
     else:
         logout_user(request)
         return HttpResponseRedirect('/')
@@ -276,6 +301,33 @@ def item_form(request, building_name, unit_number, room_name): #building form pa
             "room_name": room_name
         }
         return render(request, 'item_form.html', context)
+
+def item_details_form(request, building_name, unit_number, room_name, item_description): #building form page
+    item_details_title = "Add Item Details"
+    item_details_form = ItemDetailsForm() #use fields in UnitForm from forms.py
+    #     #if page is submitted
+
+    if request.method == 'POST':
+        form = ItemDetailsForm(request.POST)
+
+        #if form.is_valid():
+        post = form.save(commit=False)
+        post.item_id = Item.objects.get(room_id__room_name=room_name, room_id__unit_id__building_id__building_name=building_name,
+                                        room_id__unit_id__unit_number=unit_number, room_name=room_name)
+        post.save() #save input into database
+
+        #return to previous page
+        return HttpResponseRedirect("/buildings/units/rooms/items/" + building_name + "/" + unit_number + "/" + room_name)
+    else:
+        context = {
+            "item_details_form": item_details_form, #save form in key within context
+            "item_details_title": item_details_title, #save form title in key within context
+            "building_name": building_name,
+            "unit_number": unit_number,
+            "room_name": room_name,
+            "item_description": item_description
+        }
+        return render(request, 'item_details_form.html', context)
 
 
 """---------------------------------------------------------------------------
