@@ -53,6 +53,16 @@ def register_form(request):
             manager.user = user
             manager.save()
             registered = True
+
+            username = request.POST.get('username')
+            password = request.POST.get('password')
+
+            # user authentication for username & password
+            user = authenticate(username=username, password=password)
+
+        #If user is registered
+        if user and user.is_active:
+            login(request, user)
             return HttpResponseRedirect("/buildings/") #return to building page
         #if user and manager fields are not valid
         else:
@@ -317,7 +327,7 @@ def item_details_form(request, building_name, unit_number, room_name, item_descr
         post.save() #save input into database
 
         #return to previous page
-        return HttpResponseRedirect("/buildings/units/rooms/items/" + building_name + "/" + unit_number + "/" + room_name)
+        return HttpResponseRedirect("/buildings/units/rooms/items/item_details" + building_name + "/" + unit_number + "/" + room_name + "/" + item_description)
     else:
         context = {
             "item_details_form": item_details_form, #save form in key within context

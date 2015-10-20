@@ -5,7 +5,7 @@
         <nav class="vertnav">
 
             {# Vertical side navigation #}
-            <a href="{% url 'buildings:item_form' building_name unit_number room_name%}" class="new">Create details</a>
+            <a href="{% url 'buildings:item_details_form' building_name unit_number room_name item_description %}" class="new">Create details</a>
             <a href='#' class="new"> Remove details </a>
 
         </nav>
