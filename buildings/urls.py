@@ -13,7 +13,7 @@ urlpatterns = [
     # Item form
     url(r'^units/rooms/items/item_form/(?P<building_name>[\w\s]+)/(?P<unit_number>[\w\d]+)/(?P<room_name>[\w\s\d]+)', views.item_form, name="item_form"),
     # Item form
-    url(r'^units/rooms/items/item_details/item_details_form/(?P<building_name>[\w\s]+)/(?P<unit_number>[\w\d]+)/(?P<room_name>[\w\s\d]+)/(?P<item_description>[\w\s\d]+)', views.item_form, name="item_details_form"),
+    url(r'^units/rooms/items/item_details/item_details_form/(?P<building_name>[\w\s]+)/(?P<unit_number>[\w\d]+)/(?P<room_name>[\w\s\d]+)/(?P<item_description>[\w\s\d]+)', views.item_details_form, name="item_details_form"),
 
 # -------------------------------Pages----------------------------------
     #Item details page

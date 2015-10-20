@@ -1,5 +1,4 @@
 from django.shortcuts import render
-from .models import *
 from .forms import *
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth import authenticate, login, logout
@@ -95,7 +94,6 @@ def buildings(request):
 
         # sets building_icons to everything saved in building object
         buildings = Building.objects.filter(manager_id__user=request.user)
-
         # sets name equal to name attribute in user model
         name = request.user.first_name + " " + request.user.last_name
 
@@ -103,6 +101,7 @@ def buildings(request):
             "title": title,
             "manager_name": name,
             "buildings": buildings,
+            #"address": address
         }
         return render(request, 'buildings.html', context)
     else:
@@ -180,8 +179,7 @@ def item_details(request, building_name, unit_number, room_name, item_descriptio
         title = building_name + ", #" + unit_number + ", " + room_name + ", " + item_description
 
         # sets list to everything saved in unit object
-        item_details = Item_Detail.objects.filter(item_id__room_id__unit_id__building_id__manager_id__user=request.user,
-                                                  item_id__item_description=item_description,
+        item_details = Item_Detail.objects.filter(item_id__room_id__unit_id__building_id__manager_id__user=request.user, item_id__item_description=item_description,
             item_id__room_id__room_name=room_name,item_id__room_id__unit_id__unit_number=unit_number,item_id__room_id__unit_id__building_id__building_name=building_name)
 
         context = { # Dictionary used by template
@@ -262,7 +260,7 @@ def unit_form(request, building_name): #building form page
 #Room Form
 def room_form(request, building_name, unit_number): #building form page
     room_title = "Add Room"
-    room_form = RoomForm() #use fields in UnitForm from forms.py
+    room_form = RoomForm() #use fields in RoomForm from forms.py
     #     #if page is submitted
 
     if request.method == 'POST':
@@ -289,49 +287,49 @@ def room_form(request, building_name, unit_number): #building form page
 #Item Form
 def item_form(request, building_name, unit_number, room_name): #building form page
     item_title = "Add Item"
-    item_form = ItemForm() #use fields in UnitForm from forms.py
+    item_form = ItemForm() # use fields in ItemForm from forms.py
     #     #if page is submitted
 
     if request.method == 'POST':
         form = ItemForm(request.POST)
 
-        #if form.is_valid():
-        post = form.save(commit=False)
-        post.room_id = Room.objects.get(unit_id__building_id__building_name=building_name, unit_id__unit_number=unit_number, room_name=room_name)
-        post.save() #save input into database
+        # if form.is_valid():
+        item_details_forms = form.save(commit=False)
+        item_details_forms.room_id = Room.objects.get(unit_id__building_id__building_name=building_name, unit_id__unit_number=unit_number, room_name=room_name)
+        item_details_forms.save() # save input into database
 
         #return to previous page
         return HttpResponseRedirect("/buildings/units/rooms/items/" + building_name + "/" + unit_number + "/" + room_name)
     else:
         context = {
-            "item_form": item_form, #save form in key within context
-            "item_title": item_title, #save form title in key within context
+            "item_form": item_form,  # save form in key within context
+            "item_title": item_title,  # save form title in key within context
             "building_name": building_name,
             "unit_number": unit_number,
             "room_name": room_name
         }
         return render(request, 'item_form.html', context)
 
-def item_details_form(request, building_name, unit_number, room_name, item_description): #building form page
+def item_details_form(request, building_name, unit_number, room_name, item_description):
     item_details_title = "Add Item Details"
-    item_details_form = ItemDetailsForm() #use fields in UnitForm from forms.py
-    #     #if page is submitted
+    item_details_form = ItemDetailsForm()  # use fields in ItemDetailsForm from forms.py
 
+    # if page is submitted
     if request.method == 'POST':
         form = ItemDetailsForm(request.POST)
 
-        #if form.is_valid():
+        # if form.is_valid():
         post = form.save(commit=False)
         post.item_id = Item.objects.get(room_id__room_name=room_name, room_id__unit_id__building_id__building_name=building_name,
-                                        room_id__unit_id__unit_number=unit_number, room_name=room_name)
-        post.save() #save input into database
+                                        room_id__unit_id__unit_number=unit_number, item_description=item_description)
+        post.save()  # save input into database
 
-        #return to previous page
+        # return to previous page
         return HttpResponseRedirect("/buildings/units/rooms/items/item_details" + building_name + "/" + unit_number + "/" + room_name + "/" + item_description)
     else:
         context = {
-            "item_details_form": item_details_form, #save form in key within context
-            "item_details_title": item_details_title, #save form title in key within context
+            "item_details_form": item_details_form,  # save form in key within context
+            "item_details_title": item_details_title,  # save form title in key within context
             "building_name": building_name,
             "unit_number": unit_number,
             "room_name": room_name,

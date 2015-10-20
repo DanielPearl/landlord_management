@@ -35,7 +35,7 @@ class UnitForm(forms.ModelForm):
 class ItemForm(forms.ModelForm):
     class Meta:
         model = Item
-        fields = ['item_description']
+        fields = ['item_description', ]
 
 class ItemDetailsForm(forms.ModelForm):
     class Meta:
@@ -45,5 +45,9 @@ class ItemDetailsForm(forms.ModelForm):
 class RoomForm(forms.ModelForm):
      class Meta:
          model = Room
-         fields = ['room_name','room_name']
+         fields = ['room_name']
 
+class VendorForm(forms.ModelForm):
+    class Meta:
+        model = Vendor
+        fields = []
