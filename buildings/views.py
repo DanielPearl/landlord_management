@@ -294,9 +294,9 @@ def item_form(request, building_name, unit_number, room_name): #building form pa
         form = ItemForm(request.POST)
 
         # if form.is_valid():
-        item_details_forms = form.save(commit=False)
-        item_details_forms.room_id = Room.objects.get(unit_id__building_id__building_name=building_name, unit_id__unit_number=unit_number, room_name=room_name)
-        item_details_forms.save() # save input into database
+        post = form.save(commit=False)
+        post.room_id = Room.objects.get(unit_id__building_id__building_name=building_name, unit_id__unit_number=unit_number, room_name=room_name)
+        post.save() # save input into database
 
         #return to previous page
         return HttpResponseRedirect("/buildings/units/rooms/items/" + building_name + "/" + unit_number + "/" + room_name)
@@ -325,7 +325,7 @@ def item_details_form(request, building_name, unit_number, room_name, item_descr
         post.save()  # save input into database
 
         # return to previous page
-        return HttpResponseRedirect("/buildings/units/rooms/items/item_details" + building_name + "/" + unit_number + "/" + room_name + "/" + item_description)
+        return HttpResponseRedirect("/buildings/units/rooms/items/item_details/" + building_name + "/" + unit_number + "/" + room_name + "/" + item_description)
     else:
         context = {
             "item_details_form": item_details_form,  # save form in key within context
