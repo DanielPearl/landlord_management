@@ -101,7 +101,6 @@ def buildings(request):
             "title": title,
             "manager_name": name,
             "buildings": buildings,
-            #"address": address
         }
         return render(request, 'buildings.html', context)
     else:
@@ -113,13 +112,14 @@ def units(request, building_name):
     if request.user.is_authenticated():
 
         # sets list to everything saved in unit object
+        building = Building.objects.get(manager_id__user=request.user, building_name=building_name)
+        count = building.number_of_units
+        print(count)
         units = Unit.objects.filter(building_id__manager_id__user=request.user, building_id__building_name=building_name)
-        # building_date = Unit.objects.filter(building_id__build_date=building_name)
 
         context = { # Dictionary used by template
             "units": units,
             "building_name": building_name,
-            # "building_date": building_date
         }
         return render(request, 'units.html', context)
     else:
@@ -237,7 +237,6 @@ def building_form(request): #building form page
 def unit_form(request, building_name): #building form page
     unit_title = "Add Unit"
     unit_form = UnitForm() #use fields in UnitForm fs.py
-
     #if page is submitted
     if request.method == 'POST':
         form = UnitForm(request.POST)
@@ -337,6 +336,7 @@ def item_details_form(request, building_name, unit_number, room_name, item_descr
         }
         return render(request, 'item_details_form.html', context)
 
+# def delete(request):
 
 """---------------------------------------------------------------------------
                                 Deletions

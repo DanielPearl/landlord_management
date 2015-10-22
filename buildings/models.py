@@ -29,6 +29,7 @@ class Building(models.Model):
     address_id = models.ForeignKey(Address)
     building_name = models.CharField(max_length=30)
     build_date = models.DateField(blank=True)
+    number_of_units = models.IntegerField(default=None)
 
     def __str__(self):
         return self.building_name
