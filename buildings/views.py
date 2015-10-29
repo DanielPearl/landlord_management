@@ -8,6 +8,8 @@ from django.contrib.auth import authenticate, login, logout
                                 Authentication
 ---------------------------------------------------------------------------"""
 def login_user(request):
+    """Login user form"""
+
     logout_user(request)
     if request.method == 'POST':
 
@@ -31,8 +33,9 @@ def login_user(request):
         else:
             return render(request, 'homepage.html')
 
-#Register Form
 def register_form(request):
+    """Register user form"""
+
     register_title = "Register"
     registered = False
 
@@ -80,6 +83,8 @@ def register_form(request):
     return render(request, 'register_form.html', context)
 
 def logout_user(request):
+    """Logout user"""
+
     logout(request)
     return HttpResponseRedirect('/')
 
@@ -87,8 +92,9 @@ def logout_user(request):
 """---------------------------------------------------------------------------
                                 Page Renders
 ---------------------------------------------------------------------------"""
-#Building Page
 def buildings(request):
+    """Render buildings page"""
+
     if request.user.is_authenticated():
         title = "Buildings"
 
@@ -108,8 +114,9 @@ def buildings(request):
         logout_user(request)
         return HttpResponseRedirect('/')
 
-#Units Page
 def units(request, building_name):
+    """Render units page"""
+
     if request.user.is_authenticated():
 
         # populates page with units saved in the database
@@ -125,8 +132,9 @@ def units(request, building_name):
         logout_user(request)
         return HttpResponseRedirect('/')
 
-#Rooms Page
 def rooms(request, building_name, unit_number):
+    """Render rooms page"""
+
     if request.user.is_authenticated():
 
         # sets name equal to name attribute in room model
@@ -148,8 +156,9 @@ def rooms(request, building_name, unit_number):
         logout_user(request)
         return HttpResponseRedirect('/')
 
-#Items Page
 def items(request, building_name, unit_number, room_name):
+    """Item details page"""
+
     if request.user.is_authenticated():
 
         # sets name equal to name attribute in item model
@@ -172,8 +181,9 @@ def items(request, building_name, unit_number, room_name):
         logout_user(request)
         return HttpResponseRedirect('/')
 
-#Item Detail Page
 def item_details(request, building_name, unit_number, room_name, item_description):
+    """Render item details page"""
+
     if request.user.is_authenticated():
 
         # sets name equal to name attribute in item detail model
@@ -199,8 +209,10 @@ def item_details(request, building_name, unit_number, room_name, item_descriptio
 """---------------------------------------------------------------------------
                                 Forms
 ---------------------------------------------------------------------------"""
-#Building Form
-def building_form(request): #building form page
+
+def building_form(request):
+    """Create building form"""
+
     building_title = "Add Building"
     building_form = BuildingForm() #use fields in BuildingForm from forms.py
     address_form = AddressForm()
@@ -219,8 +231,10 @@ def building_form(request): #building form page
             building.address_id = address
             building.save()
 
+            # If no buildings exist in the database
             if building.number_of_units > 0:
                 for i in range(building.number_of_units):
+                    # Create unit
                     unit = Unit()
                     unit.unit_number = i+1
                     unit.building_id = building
@@ -228,26 +242,28 @@ def building_form(request): #building form page
                     unit.parking_space = "no parking"
                     unit.save()
 
+                    # Create bedroom
                     bedroom = Room()
                     bedroom.unit_id = unit
                     bedroom.room_name = "bedroom"
                     bedroom.save()
 
+                    # Create kitchen
                     kitchen = Room()
                     kitchen.unit_id = unit
                     kitchen.room_name = "kitchen"
                     kitchen.save()
 
+                    # Create bathroom
                     bathroom = Room()
                     bathroom.unit_id = unit
                     bathroom.room_name = "bathroom"
                     bathroom.save()
 
-                    create_bedroom_items(request, bedroom)
-                    create_kitchen_items(request, kitchen)
-                    create_bathroom_items(request, bathroom)
-
-
+                    # Create items
+                    bedroom_items = create_bedroom_items(request, bedroom)
+                    kitchen_items = create_kitchen_items(request, kitchen)
+                    bathroom_items = create_bathroom_items(request, bathroom)
 
             username = Manager.objects.get(user=request.user)
             building.manager_id.add(username)
@@ -267,6 +283,7 @@ def create_bedroom(request, unit):
     pass
 
 def create_bedroom_items(request, bedroom):
+    """Create items found in bedroom"""
 
     item = "window pane"
     create_item(request, bedroom, item)
@@ -288,6 +305,8 @@ def create_bedroom_items(request, bedroom):
     create_item(request, bedroom, item)
 
 def create_kitchen_items(request, kitchen):
+    """Create items found in kitchen"""
+
     item = "refrigerator"
     create_item(request, kitchen, item)
     item = "sink"
@@ -324,6 +343,7 @@ def create_kitchen_items(request, kitchen):
     create_item(request, kitchen, item)
 
 def create_bathroom_items(request, bathroom):
+    """Create items found in bathroom"""
 
     item = "toilet"
     create_item(request, bathroom, item)
@@ -355,22 +375,32 @@ def create_bathroom_items(request, bathroom):
     create_item(request, bathroom, item)
 
 def create_item(request, room, new_item):
+    """Create items in all rooms"""
+
+    # Set attributes for item object
     item = Item()
     item.room_id = room
     item.item_description = "{}".format(new_item)
-    # create_item_details(request, new_item)
+
     item.save()
 
+    
+    # Create item details
+
 def create_item_details(request, new_item):
+    """Create item details for items"""
+
     item_detail = Item_Detail()
     item_detail.item_id = new_item
     item_detail.vendor_info = "original"
     item_detail.date = item_detail.item_id.room_id.unit_id.building_id.build_date
     item_detail.cost = 0
     item_detail.install_duration = 0
+    item_detail.save()
 
-#Unit Form
-def unit_form(request, building_name): #building form page
+def unit_form(request, building_name):
+    """Create unit form"""
+
     unit_title = "Add Unit"
     unit_form = UnitForm() #use fields in UnitForm fs.py
     #if page is submitted
@@ -392,8 +422,9 @@ def unit_form(request, building_name): #building form page
         }
         return render(request, 'unit_form.html', context)
 
-#Room Form
-def room_form(request, building_name, unit_number): #building form page
+def room_form(request, building_name, unit_number):
+    """Create room form"""
+
     room_title = "Add Room"
     room_form = RoomForm() #use fields in RoomForm from forms.py
     #     #if page is submitted
@@ -421,8 +452,9 @@ def room_form(request, building_name, unit_number): #building form page
         }
         return render(request, 'room_form.html', context)
 
-#Item Form
-def item_form(request, building_name, unit_number, room_name): #building form page
+def item_form(request, building_name, unit_number, room_name):
+    """Create item form"""
+
     item_title = "Add Item"
     item_form = ItemForm() # use fields in ItemForm from forms.py
     #     #if page is submitted
@@ -448,6 +480,8 @@ def item_form(request, building_name, unit_number, room_name): #building form pa
         return render(request, 'item_form.html', context)
 
 def item_details_form(request, building_name, unit_number, room_name, item_description):
+    """Create item detail from"""
+
     item_details_title = "Add Item Details"
     item_details_form = ItemDetailsForm()  # use fields in ItemDetailsForm from forms.py
 

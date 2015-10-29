@@ -1,16 +1,31 @@
+{% load crispy_forms_tags %}
 <!DOCTYPE html>
 <html>
 
 {% load staticfiles %}
 
 <head>
+    <title> Landlord Program </title>
+
+    {# Fonts loaded onto page #}
+    <link rel="stylesheet" type="text/css" href="{% static '../static/css/styles.css' %}">
+    <link href='https://fonts.googleapis.com/css?family=Architects+Daughter' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Cabin+Sketch' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Slabo+27px|Raleway' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Special+Elite' rel='stylesheet' type='text/css'>
+
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+
 </head>
 <h1>{{ building_title }}</h1>
 
+<div class='col-md-4 col-md-offset-4 centered col-sm-4 col-sm-offset-4 centered col-lg-4 col-lg-offset-4 centered'>
 <form method='POST' action='/buildings/building_form/'>{% csrf_token %}
-    {{ building_form.as_p }}
-    {{ address_form.as_p }}
-    <input type="submit" value='submit'/>
+    {{ building_form|crispy }}
+    {{ address_form|crispy }}
+    <input class='btn btn-primary' type="submit" value='submit'/>
 </form>
-
+</div>
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+<script src="{% static 'js/ie10-viewport-bug-workaround.js' %}"></script>
 </html>

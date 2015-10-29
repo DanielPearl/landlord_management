@@ -1,9 +1,9 @@
-body{
-    background-color: #2A363B;
+body,.login{
+    background-image: url("/../static/images/dark_embroidery.png");
 }
 
 h1 {
-    color: white;
+    color: white !important;
     text-align: center;
     font-family: 'Raleway', sans-serif;
     font-size: 40px;
@@ -38,11 +38,9 @@ nav a{
     display: inline-block;
     width: 20%;
     height:30px;
-    background-color: blanchedalmond;
     padding: 2px;
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
-    margin-right: 2px;
     font-size: 18px;
     font-family: 'Architects Daughter', cursive;
 }
@@ -51,7 +49,7 @@ nav a{
 ul a{
     text-align: center;
     text-decoration:none;
-    color: #2A363B;
+    color:black;
     font-family: 'Special Elite', cursive;
     font-size: 1em;
 }
@@ -72,6 +70,7 @@ img{
 }
 
 label{
+    color:white;
     word-wrap: break-word;
     text-align: center;
     display:block;
@@ -81,16 +80,28 @@ label{
 section{
     height:100%
 }
+
 ul{
     padding:0px;
     display:inline-block;
     text-align: center;
 }
+
+form{
+    text-align: center;
+    border-radius: 10px;
+    padding:20px;
+}
+
 .buildings, .rooms, .items{
     display: inline-block;
     vertical-align: top;
+    background-image:url("/../static/images/crossword.png");
 }
 
+.buildings:hover{
+    color:blueviolet;
+}
 a:hover{
     background-color: blueviolet;
     color:white;
@@ -110,7 +121,7 @@ a:hover{
 }
 /* folder view containing side tabs and lists */
 .items{
-    background-color: blanchedalmond;
+    background-image:url("/../static/images/crossword.png");
     border-top-right-radius: 10px;
     border-bottom-right-radius: 10px;
     border-bottom-left-radius: 10px;
@@ -143,38 +154,43 @@ a:hover{
 .new {
     width: 55px;
     font-size: 13px;
-    padding: 7px;
-    color: blanchedalmond;
-    background-color: #2A363B;
-    border-radius: 10px;
-    display: inline-block;
-    text-align: center;
+    color: white;
+    background-color: #333333;
     text-decoration: none;
     font-family: 'Raleway', sans-serif;
 }
+
+.new:hover{
+    color:white;
+    text-decoration: none;
+}
  /* Top navigation colors */
- .tenants, .vendors{
-    background-color: #E84A5F;
+ .tenants{
+    background-color: darkturquoise;
 }
  /* Top navigation colors */
  .managers{
-    background-color: #99B898;
+    background-color: #ffc500;
  }
 
+ .vendors{
+     background-color: #E84A5F;
+ }
  /* Side navigation parent vertical align */
  .vertnav{
      display: inline-block;
      width:10%;
-     vertical-align: top;
      margin:5px;
-     height:100%;
+     margin-right: 5px;
  }
 
  /* Side bar buttons */
  .vertnav a{
-     height:50px;
+     height:55px;
+     width: 55px;
+     padding:7px;
      margin:5px;
-     text-align: center;
+     border-radius: 10%;
  }
 
  /* style for units & items page links */

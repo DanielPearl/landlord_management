@@ -1,10 +1,28 @@
+{% load crispy_forms_tags %}
+<!DOCTYPE html>
+<html>
+
+{% load staticfiles %}
+
+<head>
+    <title> Landlord Program </title>
+
+    {# Fonts loaded onto page #}
+    <link rel="stylesheet" type="text/css" href="{% static '../static/css/styles.css' %}">
+    <link href='https://fonts.googleapis.com/css?family=Architects+Daughter' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Cabin+Sketch' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Slabo+27px|Raleway' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Special+Elite' rel='stylesheet' type='text/css'>
+
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+
 <h1>{{ item_details_title }}</h1>
 
 {#{{ user }}#}
 
-<form method='POST' action='/buildings/units/rooms/items/item_details/item_details_form/{{ building_name }}/{{ unit_number }}/{{ room_name }}/
+<form class='col-md-4 col-md-offset-4 centered col-sm-4 col-sm-offset-4 centered col-lg-4 col-lg-offset-4 centered' method='POST' action='/buildings/units/rooms/items/item_details/item_details_form/{{ building_name }}/{{ unit_number }}/{{ room_name }}/
 {{ item_description }}'>
     {% csrf_token %}
-    {{ item_details_form.as_p }}
-    <input type="submit" value='submit'/>
+    {{ item_details_form|crispy }}
+    <input class='btn btn-primary' type="submit" value='submit'/>
 </form>
