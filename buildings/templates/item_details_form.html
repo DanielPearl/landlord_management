@@ -24,5 +24,6 @@
 {{ item_description }}'>
     {% csrf_token %}
     {{ item_details_form|crispy }}
+    {{ vendor_form|crispy }}
     <input class='btn btn-primary' type="submit" value='submit'/>
 </form>

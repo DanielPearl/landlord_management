@@ -25,8 +25,8 @@
         {# Populate page with building database #}
         {% for building in buildings %}
             <li class="buildings">
-                <a href="{% url 'buildings:units' building.building_name %}" onmouseover="hover_details(this)" onmouseout="hover_normalize(this)";>
-                    <img src="../static/images/apartment.png" width=50px onmouseover="hover_details(this)" onmouseout="hover_normalize(this)";>
+                <a href="{% url 'buildings:units' building.building_name %}">
+                    <img src="../static/images/apartment.png" width=50px>
                     <br/>
                     {{ building }}
                 </a>

@@ -1,9 +1,32 @@
-<h1>Register</h1>
+{% load crispy_forms_tags %}
+<!DOCTYPE html>
+<html>
+
+{% load staticfiles %}
 
 {#{{ user }}#}
+<head>
+    <title> Landlord Program </title>
 
-<form method='post' action='/register/'>{% csrf_token %}
-    {{ user_form.as_p }}
-    {{ manager_form.as_p }}
-    <input type="submit" name='submit' value='submit'/>
+    {# Fonts loaded onto page #}
+    <link rel="stylesheet" type="text/css" href="{% static '../static/css/styles.css' %}">
+    <link href='https://fonts.googleapis.com/css?family=Architects+Daughter' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Cabin+Sketch' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Slabo+27px|Raleway' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Special+Elite' rel='stylesheet' type='text/css'>
+
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+
+</head>
+
+<h1>Register</h1>
+
+<form class='col-md-4 col-md-offset-4 centered col-sm-4 col-sm-offset-4 centered col-lg-4 col-lg-offset-4 centered' method='post' action='/register/'>{% csrf_token %}
+    {{ user_form|crispy }}
+    {{ manager_form|crispy }}
+    <input class='btn btn-primary' type="submit" name='submit' value='submit'/>
+
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/ie10-viewport-bug-workaround.js' %}"></script>
 </form>
+</html>

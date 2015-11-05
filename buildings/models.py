@@ -85,5 +85,8 @@ class Item_Detail(models.Model):
     item_id = models.ManyToManyField(Item)
     vendor_info = models.ForeignKey(Vendor)
     date = models.DateField()
-    cost = models.FloatField()
-    install_duration = models.IntegerField()
+    cost = models.DecimalField(max_digits=6, decimal_places=2)
+    # install_duration = models.FloatField()
+
+    def __str__(self):
+        return self.item_id

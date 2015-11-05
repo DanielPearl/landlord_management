@@ -22,10 +22,22 @@ class AddressForm(forms.ModelForm):
         model = Address
         fields = ['street_number', 'street_name', 'city', 'state', 'zip_code']
 
+    def clean_street_number(self):
+        street_number = self.cleaned_data.get('street_number')
+        if street_number == None:
+            raise forms.ValidationError("Please enter a building name")
+        return street_number
+
 class BuildingForm(forms.ModelForm):
     class Meta:
         model = Building
         fields = ['building_name', 'build_date', 'number_of_units']
+
+    def clean_building_name(self):
+        building_name = self.cleaned_data.get('building_name')
+        if building_name == None:
+            raise forms.ValidationError("Please enter a building name")
+        return building_name
 
 class UnitForm(forms.ModelForm):
     class Meta:
@@ -40,7 +52,7 @@ class ItemForm(forms.ModelForm):
 class ItemDetailsForm(forms.ModelForm):
     class Meta:
         model = Item_Detail
-        fields = ['vendor_info', 'date', 'cost', 'install_duration']
+        fields = ['vendor_info', 'date', 'cost']
 
 class RoomForm(forms.ModelForm):
      class Meta:
@@ -50,4 +62,4 @@ class RoomForm(forms.ModelForm):
 class VendorForm(forms.ModelForm):
     class Meta:
         model = Vendor
-        fields = []
+        fields = ['vendor_name']
