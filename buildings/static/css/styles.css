@@ -162,7 +162,8 @@ a:hover{
     color: white;
     background-color: #222222;
     text-decoration: none;
-    font-family: 'Raleway', sans-serif;
+    font-family: 'Raleway', sans-serif
+;
 }
 
 .new:hover{
@@ -178,7 +179,7 @@ a:hover{
     background-color: #ffc500;
  }
 
- .vendors{
+.vendors{
      background-color: #E84A5F;
  }
  /* Side navigation parent vertical align */
@@ -191,18 +192,19 @@ a:hover{
 
  /* Side bar buttons */
  .vertnav a{
-     height:55px;
-     width: 55px;
+     height:60px;
+     width: 60px;
      padding:7px;
      margin:5px;
      border-radius: 10%;
+     padding-top: 10px;
  }
 
  /* style for units & items page links */
  ul .units, .items_style{
      display: inline-block;
      text-align: center;
-     width:150px;
+     width:30%;
      margin:5px;
  }
 
@@ -213,5 +215,12 @@ a:hover{
      margin-bottom: 0px;
      text-decoration: none;
      font-family: 'Special Elite', cursive;
-
  }
+span .pencil {
+    float:right;
+    width:50px;
+}
+
+/*span { width:500px;}*/
+/*.nesting a {width:500px;}*/
+/*a .pencil {display : none; }*/

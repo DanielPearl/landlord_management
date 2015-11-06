@@ -2,7 +2,7 @@ from django.shortcuts import render
 from .forms import *
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth import authenticate, login, logout
-
+import sys
 """---------------------------------------------------------------------------
                                 Authentication
 ---------------------------------------------------------------------------"""
@@ -123,7 +123,7 @@ def units(request, building_name):
 
         # Dictionary keys to be used in templates
         context = {
-            "units": units.sort(),
+            "units": units,
             "building_name": building_name,
         }
         return render(request, 'units.html', context)
@@ -137,7 +137,7 @@ def rooms(request, building_name, unit_number):
     if request.user.is_authenticated():
 
         # sets name equal to name attribute in room model
-        title = building_name + ", #" + unit_number
+        title = building_name + " >  #" + unit_number
 
         # sets list to everything saved in room object
         rooms = Room.objects.filter(unit_id__building_id__manager_id__user=request.user,
@@ -161,7 +161,7 @@ def items(request, building_name, unit_number, room_name):
     if request.user.is_authenticated():
 
         # sets name equal to name attribute in item model
-        title = building_name + ", #" + unit_number + ", " + room_name
+        title = building_name + " >  #" + unit_number + " >  " + room_name
 
         # sets list to everything saved in item object
         items = Item.objects.filter(room_id__unit_id__building_id__manager_id__user=request.user,
@@ -186,7 +186,7 @@ def item_details(request, building_name, unit_number, room_name, item_descriptio
     if request.user.is_authenticated():
 
         # sets name equal to name attribute in item detail model
-        title = building_name + ", #" + unit_number + ", " + room_name + ", " + item_description
+        title = building_name + " >  #" + unit_number + " >  " + room_name + " >  " + item_description
 
         # sets list to everything saved in item detail object
         item_details = Item_Detail.objects.filter(item_id__room_id__unit_id__building_id__manager_id__user=request.user, item_id__item_description=item_description,
@@ -282,126 +282,6 @@ def building_form(request):
         }
         return render(request, 'building_form.html', context)
 
-def create_bedroom(request, unit):
-    pass
-
-def create_bedroom_items(request, bedroom):
-    """Create items found in bedroom"""
-
-    item = "window pane"
-    create_item(request, bedroom, item)
-    item = "window sill"
-    create_item(request, bedroom, item)
-    item = "floor"
-    create_item(request, bedroom, item)
-    item = "trim"
-    create_item(request, bedroom, item)
-    item = "walls"
-    create_item(request, bedroom, item)
-    item = "ceiling light"
-    create_item(request, bedroom, item)
-    item = "blinds"
-    create_item(request, bedroom, item)
-    item = "closet"
-    create_item(request, bedroom, item)
-    item = "closet doors"
-    create_item(request, bedroom, item)
-
-def create_kitchen_items(request, kitchen):
-    """Create items found in kitchen"""
-
-    item = "refrigerator"
-    create_item(request, kitchen, item)
-    item = "sink"
-    create_item(request, kitchen, item)
-    item = "faucet"
-    create_item(request, kitchen, item)
-    item = "counters"
-    create_item(request, kitchen, item)
-    item = "counter lights"
-    create_item(request, kitchen, item)
-    item = "vinyl"
-    create_item(request, kitchen, item)
-    item = "top cabinets"
-    create_item(request, kitchen, item)
-    item = "bottom cabinets"
-    create_item(request, kitchen, item)
-    item = "blinds"
-    create_item(request, kitchen, item)
-    item = "walls"
-    create_item(request, kitchen, item)
-    item = "oven"
-    create_item(request, kitchen, item)
-    item = "oven lights"
-    create_item(request, kitchen, item)
-    item = "dish washer"
-    create_item(request, kitchen, item)
-    item = "window pane"
-    create_item(request, kitchen, item)
-    item = "window sill"
-    create_item(request, kitchen, item)
-    item = "ceiling light"
-    create_item(request, kitchen, item)
-    item = "floor"
-    create_item(request, kitchen, item)
-
-def create_bathroom_items(request, bathroom):
-    """Create items found in bathroom"""
-
-    item = "toilet"
-    create_item(request, bathroom, item)
-    item = "sink"
-    create_item(request, bathroom, item)
-    item = "faucet"
-    create_item(request, bathroom, item)
-    item = "bathtub"
-    create_item(request, bathroom, item)
-    item = "shower"
-    create_item(request, bathroom, item)
-    item = "vinyl"
-    create_item(request, bathroom, item)
-    item = "walls"
-    create_item(request, bathroom, item)
-    item = "ceiling light"
-    create_item(request, bathroom, item)
-    item = "ceiling fan"
-    create_item(request, bathroom, item)
-    item = "shower head"
-    create_item(request, bathroom, item)
-    item = "cabinets"
-    create_item(request, bathroom, item)
-    item = "counters"
-    create_item(request, bathroom, item)
-    item = "vanity mirror"
-    create_item(request, bathroom, item)
-    item = "floor"
-    create_item(request, bathroom, item)
-
-def create_item(request, room, new_item):
-    """Create items in all rooms"""
-
-    # Set attributes for item object
-    item = Item()
-    item.room_id = room
-    item.item_description = "{}".format(new_item)
-
-    item.save()
-
-    # create_item_details(request, new_item)
-
-    
-    # Create item details
-
-def create_item_details(request, new_item):
-    """Create item details for items"""
-
-    item_detail = Item_Detail()
-    item_detail.item_id = new_item
-    item_detail.vendor_info = "original"
-    item_detail.date = item_detail.item_id.room_id.unit_id.building_id.build_date
-    item_detail.cost = 0
-    item_detail.install_duration = 0
-    item_detail.save()
 
 def unit_form(request, building_name):
     """Create unit form"""
@@ -443,7 +323,7 @@ def unit_form(request, building_name):
         else:
             return HttpResponse("Invalid login info")
         #return to previous page
-        return HttpResponseRedirect("/buildings/units/" + building_name)
+        return HttpResponseRedirect("/buildings/" + building_name + "/")
     else:
         context = {
             "unit_form": unit_form, #save form in key within context
@@ -473,7 +353,7 @@ def room_form(request, building_name, unit_number):
 
 
         #return to previous page
-        return HttpResponseRedirect("/buildings/units/rooms/" + building_name + "/" + unit_number)
+        return HttpResponseRedirect("/buildings/" + building_name + "/" + unit_number + "/")
     else:
         print('no post')
         context = {
@@ -501,7 +381,7 @@ def item_form(request, building_name, unit_number, room_name):
         else:
             return HttpResponse("Invalid login info")
 
-        return HttpResponseRedirect("/buildings/units/rooms/items/" + building_name + "/" + unit_number + "/" + room_name)
+        return HttpResponseRedirect("/buildings/" + building_name + "/" + unit_number + "/" + room_name + "/")
     else:
         context = {
             "item_form": item_form,  # save form in key within context
@@ -524,7 +404,10 @@ def item_details_form(request, building_name, unit_number, room_name, item_descr
         item_details_form = ItemDetailsForm(request.POST)
         vendor_form = VendorForm(request.POST)
 
+        # TODO why are my forms not valid?
         if item_details_form.is_valid() and vendor_form.is_valid():
+
+            print("Both forms are valid.")
 
             item_details_form.save()
             vendor = vendor_form.save()
@@ -536,10 +419,10 @@ def item_details_form(request, building_name, unit_number, room_name, item_descr
             item_details.save()  # save input into database
 
         else:
-            return HttpResponse("Invalid login info")
+            return HttpResponse("Invalid login info.")
 
         # return to previous page
-        return HttpResponseRedirect("/buildings/units/rooms/items/item_details/" + building_name + "/" + unit_number + "/" + room_name + "/" + item_description)
+        return HttpResponseRedirect("/buildings/" + building_name + "/" + unit_number + "/" + room_name + "/" + item_description + "/")
     else:
         context = {
             "item_details_form": item_details_form,  # save form in key within context
@@ -553,6 +436,91 @@ def item_details_form(request, building_name, unit_number, room_name, item_descr
         return render(request, 'item_details_form.html', context)
 
 # def delete(request):
+
+"""---------------------------------------------------------------------------
+                             Create Objects
+---------------------------------------------------------------------------"""
+
+def create_bedroom(request, unit):
+    pass
+
+def create_bedroom_items(request, bedroom):
+    """Create items found in bedroom"""
+
+    create_item(request, bedroom, "window pane")
+    create_item(request, bedroom, "window sill")
+    create_item(request, bedroom, "floor")
+    create_item(request, bedroom, "trim")
+    create_item(request, bedroom, "walls")
+    create_item(request, bedroom, "ceiling light")
+    create_item(request, bedroom, "blinds")
+    create_item(request, bedroom, "closet")
+    create_item(request, bedroom, "closet doors")
+
+def create_kitchen_items(request, kitchen):
+    """Create items found in kitchen"""
+
+    create_item(request, kitchen, "refrigerator")
+    create_item(request, kitchen, "sink")
+    create_item(request, kitchen, "faucet")
+    create_item(request, kitchen, "counters")
+    create_item(request, kitchen, "counter lights")
+    create_item(request, kitchen, "vinyl")
+    create_item(request, kitchen, "top cabinets")
+    create_item(request, kitchen, "bottom cabinets")
+    create_item(request, kitchen, "blinds")
+    create_item(request, kitchen, "walls")
+    create_item(request, kitchen, "oven")
+    create_item(request, kitchen, "oven lights")
+    create_item(request, kitchen, "dish washer")
+    create_item(request, kitchen, "window pane")
+    create_item(request, kitchen, "window sill")
+    create_item(request, kitchen, "ceiling light")
+    create_item(request, kitchen, "floor")
+
+def create_bathroom_items(request, bathroom):
+    """Create items found in bathroom"""
+
+    create_item(request, bathroom, "toilet")
+    create_item(request, bathroom, "sink")
+    create_item(request, bathroom, "faucet")
+    create_item(request, bathroom, "bathtub")
+    create_item(request, bathroom, "shower")
+    create_item(request, bathroom, "vinyl")
+    create_item(request, bathroom, "walls")
+    create_item(request, bathroom, "ceiling light")
+    create_item(request, bathroom, "ceiling fan")
+    create_item(request, bathroom, "shower head")
+    create_item(request, bathroom, "cabinets")
+    create_item(request, bathroom, "counters")
+    create_item(request, bathroom, "vanity mirror")
+    create_item(request, bathroom, "floor")
+
+def create_item(request, room, item_desc):
+    """Create items in all rooms"""
+
+    # Set attributes for item object
+    item = Item()
+    item.room_id = room
+    item.item_description = "{}".format(item_desc)
+
+    item.save()
+
+    create_item_details(request, item)
+
+
+    # Create item details
+
+def create_item_details(request, item):
+    """Create item details for items"""
+
+    item_detail = Item_Detail()
+    item_detail.item_id = item
+    item_detail.vendor_info = "original"
+    item_detail.date = item_detail.item_id.room_id.unit_id.building_id.build_date
+    item_detail.cost = 0
+    # item_detail.install_duration = 0
+    item_detail.save()
 
 """---------------------------------------------------------------------------
                                 Deletions

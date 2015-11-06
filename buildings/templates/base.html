@@ -6,16 +6,22 @@
 <head>
     <title> Landlord Program </title>
 
-    {# Fonts loaded onto page #}
+    {#  Page styles  #}
     <link rel="stylesheet" type="text/css" href="{% static '../static/css/styles.css' %}">
+
+    {#  Fonts loaded onto page  #}
     <link href='https://fonts.googleapis.com/css?family=Architects+Daughter' rel='stylesheet' type='text/css'>
     <link href='https://fonts.googleapis.com/css?family=Cabin+Sketch' rel='stylesheet' type='text/css'>
-    <link href='https://fonts.googleapis.com/css?family=Slabo+27px|Raleway' rel='stylesheet' type='text/css'></head>
-    <link href='https://fonts.googleapis.com/css?family=Special+Elite' rel='stylesheet' type='text/css'><body>
+    <link href='https://fonts.googleapis.com/css?family=Slabo+27px|Raleway' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Special+Elite' rel='stylesheet' type='text/css'>
 
-{#    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">#}
+    {% block bootstrap %}
+            <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+    {% endblock bootstrap %}
+
 </head>
-    {# Page title #}
+
+<body>
     <h1> Landlord Management </h1>
 
 
@@ -27,13 +33,14 @@
         <a class='vendors' href='#'> Vendors </a>
     </nav>
 
-    </div>
     <article class="items">
         <a class='logout' href="{% url 'logout' %}">
             logout
         </a>
+
         {% block content %}
         {% endblock %}
+
     </article>
 {#    <article class="alerts">#}
 {#        <section>#}
@@ -42,7 +49,6 @@
 {#            </ul> -->#}
 {#        </section>#}
 {#    </article>#}
-</body>
 
 <script type="text/javascript" src="{% static "jquery/jquery-2.1.4.min.js" %}"></script>
 
@@ -56,6 +62,14 @@
 {#            $(this).attr('src', "/../static/images/apartment.png");#}
 {#        }#}
 {#    );#}
-</script>
+    $(document).ready(function(){
+    $('.nesting a').hover(function(){
+        $(this).children('span.pencil').css({'display' : 'inline-block'});
+    },function(){
+        $(this).children('span.pencil').css({'display' : 'none'});
+    });
+    });
 
+</script>
+</body>
 </html>
