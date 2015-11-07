@@ -22,11 +22,11 @@
         {# Populate page with building database #}
         {% for building in buildings %}
             <li class="buildings">
-                <a class="nesting" href="{% url 'buildings:units' building.building_name %}" >
+                <a data-toggle="tooltip" title="{{ building.address_id }}
+                {{ building.build_date }}" href="{% url 'buildings:units' building.building_name %}">
                     <img src="../static/images/apartment.png" width=50px>
                     <br/>
                     {{ building }}
-                    <span class="pencil glyph-icon glyph-icon-pencil"></span>
                 </a>
             </li>
         {% endfor %}
@@ -36,5 +36,5 @@
 
 {% endblock content %}
 
-{% block bootstrap %}
-{% endblock bootstrap %}
+{#{% block bootstrap %}#}
+{#{% endblock bootstrap %}#}

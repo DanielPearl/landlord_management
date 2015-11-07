@@ -2,18 +2,15 @@
 {% load staticfiles %}
 <!DOCTYPE html>
 <html>
-    <main class="login">
         <head>
             <link rel="stylesheet" type="text/css" href="{% static '../static/css/styles.css' %}">
             <link href='https://fonts.googleapis.com/css?family=Slabo+27px|Raleway' rel='stylesheet' type='text/css'></head>
-            <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
-
             <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
         </head>
         <h1>Login</h1>
 
         {#{{ user }}#}
-
+        <body>
         <form class='col-md-4 col-md-offset-4 centered col-sm-4 col-sm-offset-4 centered col-lg-4 col-lg-offset-4 centered' action="" method="post">
             {% csrf_token %}
             <label>Username: </label><br>
@@ -23,7 +20,7 @@
             <input class='btn btn-primary' type="submit" value='submit'/><br><br>
             <a href="{% url 'register' %}">Register</a>
         </form>
-    </main>
+        </body>
     <script src="{% static 'js/bootstrap.min.js' %}"></script>
     <script src="{% static 'js/ie10-viewport-bug-workaround.js' %}"></script>
 </html>

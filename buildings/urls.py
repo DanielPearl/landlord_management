@@ -47,7 +47,7 @@ urlpatterns = [
     url(r'^(?P<building_name>[\w\s]+)/(?P<unit_number>[\w\d]+)/room_form/', views.room_form, name="room_form"),
     # Item form
     url(r'^(?P<building_name>[\w\s]+)/(?P<unit_number>[\w\d]+)/(?P<room_name>[\w\s\d]+)/item_form/', views.item_form, name="item_form"),
-    # Item form
+    # Item Details form
     url(r'^(?P<building_name>[\w\s]+)/(?P<unit_number>[\w\d]+)/(?P<room_name>[\w\s\d]+)/(?P<item_description>[\w\s\d]+)/item_details_form/', views.item_details_form, name="item_details_form"),
 
 # -------------------------------Pages----------------------------------
@@ -61,8 +61,6 @@ urlpatterns = [
     #Unit page
     url(r'^(?P<building_name>[\w\s]+)', views.units, name="units"),
 
-    #Building page
-    # url(r'^buildings/', views.buildings, name="buildings"),
 
     #Building/Homepage
     url(r'^$', views.buildings, name="buildings"),

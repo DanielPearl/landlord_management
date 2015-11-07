@@ -53,23 +53,10 @@
 <script type="text/javascript" src="{% static "jquery/jquery-2.1.4.min.js" %}"></script>
 
 <script>
-{#    $('.buildings img, .buildings a').hover(#}
-{#    //change image to purple on hover#}
-{#        function(){#}
-{#            $(this).attr('src', "/../static/images/apartment_hover.png");#}
-{#        },#}
-{#        function (){#}
-{#            $(this).attr('src', "/../static/images/apartment.png");#}
-{#        }#}
-{#    );#}
-    $(document).ready(function(){
-    $('.nesting a').hover(function(){
-        $(this).children('span.pencil').css({'display' : 'inline-block'});
-    },function(){
-        $(this).children('span.pencil').css({'display' : 'none'});
-    });
-    });
-
+    $(function () {
+    $('[data-toggle="tooltip"]').tooltip()
+    })
 </script>
+
 </body>
 </html>

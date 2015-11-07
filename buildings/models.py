@@ -18,7 +18,7 @@ class Address(models.Model):
 class Manager(models.Model):
     user = models.OneToOneField(User)
     start_date = models.DateField()
-    phone_number = models.IntegerField()
+    phone_number = models.IntegerField(default=None)
 
     def __str__(self):
         return self.user.first_name + " " + self.user.last_name
@@ -82,11 +82,12 @@ class Item(models.Model):
         return self.item_description
 
 class Item_Detail(models.Model):
-    item_id = models.ManyToManyField(Item)
-    vendor_info = models.ForeignKey(Vendor)
+    item_id = models.ForeignKey(Item)
+    # vendor_info = models.ForeignKey(Vendor)
+    vendor = models.CharField(max_length=30)
     date = models.DateField()
     cost = models.DecimalField(max_digits=6, decimal_places=2)
     # install_duration = models.FloatField()
 
     def __str__(self):
-        return self.item_id
+        return str(self.date)

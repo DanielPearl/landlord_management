@@ -4,7 +4,7 @@
     <section>
         <nav class="vertnav">
 
-            {# Vertical side navigation #}
+            <!-- Vertical side navigation -->
             <a href="{% url 'buildings:item_details_form' building_name unit_number room_name item_description %}" class="new">Create details</a>
             <a href='#' class="new"> Remove details </a>
 
@@ -12,7 +12,7 @@
 
         <ul class="box">
 
-            {# Create page title #}
+            <!-- Create page title -->
             <header>
                 <h2>
                     <a href="{% url 'buildings:units' building_name %}">{{building_name}}</a>,
@@ -22,13 +22,15 @@
                 </h2>
             </header>
 
-            {# Populate page with building database #}
+            <!-- {# Populate page with item details database #} -->
             {% for item_detail in item_details %}
-                <p class = 'items_style'>
-                    <a href= "#"> {# "{% url 'units:rooms' unit %}"> #}
-                        {{ item_detail }}
-                    </a>
-                </p>
+                <section class = 'items_style'>
+                    <p href= "#">
+                        {{ item_detail.date }}<br/>
+                        ${{ item_detail.cost }}<br/>
+                        {{ item_detail.vendor }}
+                    </p>
+                </section>
             {% endfor %}
 
         </ul>
@@ -43,3 +45,6 @@
 {#    </article>#}
 
 {% endblock %}
+
+{#{% block bootstrap %}#}
+{#{% endblock bootstrap %}#}

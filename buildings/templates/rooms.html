@@ -9,7 +9,6 @@
             {# Vertical side navigation #}
             <a href="{% url 'buildings:room_form' building_name unit_number %}" class="new"> Create room </a>
             <a href='#' class="new"> Remove room </a>
-            <a href='#' class="new"> Visit room </a>
 
         </nav>
 
@@ -23,7 +22,7 @@
                 </h2>
             </header>
 
-            {# Populate page with building database #}
+            {# Populate page with room database #}
             {% for room in rooms %}
                 <li class = 'rooms'>
                     <a href= "{% url 'buildings:items' building_name unit_number room.room_name %}"> {# "{% url 'units:rooms' unit %}"> #}
@@ -49,3 +48,6 @@
 {#    </article>#}
 
 {% endblock %}
+
+{#{% block bootstrap %}#}
+{#{% endblock bootstrap %}#}

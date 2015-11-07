@@ -7,7 +7,6 @@
             {# Vertical side navigation #}
             <a href="{% url 'buildings:item_form' building_name unit_number room_name%}" class="new">Create item</a>
             <a href='#' class="new"> Remove item </a>
-            <a href='#' class="new"> Create template </a>
 
         </nav>
 
@@ -22,10 +21,11 @@
                 </h2>
             </header>
 
-            {# Populate page with building database #}
+            {# Populate page with item database #}
             {% for item in items %}
                 <p class = 'items_style'>
-                    <a href= "
+                    <a data-toggle="tooltip" title="{{ item_details.date }}
+                    {{ item_details.cost }}" href= "
                     {% url 'buildings:item_details' building_name unit_number room_name item.item_description %}"> {# "{% url 'units:rooms' unit %}"> #}
                         {{ item }}
                     </a>
@@ -44,3 +44,6 @@
 {#    </article>#}
 
 {% endblock %}
+
+{#{% block bootstrap %}#}
+{#{% endblock bootstrap %}#}

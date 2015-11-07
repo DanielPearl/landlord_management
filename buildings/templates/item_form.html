@@ -20,7 +20,8 @@
 
 {#{{ user }}#}
 
-<form class='col-md-4 col-md-offset-4 centered col-sm-4 col-sm-offset-4 centered col-lg-4 col-lg-offset-4 centered' method='POST' action='/buildings/{{ building_name }}/{{ unit_number }}/{{ room_name }}/item_form/'>{% csrf_token %}
+<form class='col-md-4 col-md-offset-4 centered col-sm-4 col-sm-offset-4 centered col-lg-4 col-lg-offset-4 centered' method='POST' action='/buildings/{{ building_name }}/{{ unit_number }}/{{ room_name }}/item_form/'>
+    {% csrf_token %}
     {{ item_form|crispy }}
     <input class='btn btn-primary' type="submit" value='submit'/>
 </form>

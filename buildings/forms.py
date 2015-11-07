@@ -52,7 +52,7 @@ class ItemForm(forms.ModelForm):
 class ItemDetailsForm(forms.ModelForm):
     class Meta:
         model = Item_Detail
-        fields = ['vendor_info', 'date', 'cost']
+        fields = ['date', 'cost', 'vendor']
 
 class RoomForm(forms.ModelForm):
      class Meta:

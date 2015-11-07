@@ -2,10 +2,12 @@ from django.shortcuts import render
 from .forms import *
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth import authenticate, login, logout
-import sys
+
 """---------------------------------------------------------------------------
                                 Authentication
 ---------------------------------------------------------------------------"""
+
+
 def login_user(request):
     """Login user form"""
 
@@ -18,19 +20,20 @@ def login_user(request):
         # user authentication for username & password
         user = authenticate(username=username, password=password)
 
-        #If user is registered
+        # If user is registered
         if user and user.is_active:
             login(request, user)
             return HttpResponseRedirect('/buildings/')
-        #if user is not registered
+        # if user is not registered
         else:
             return HttpResponse("Invalid login info")
     else:
         if request.user.is_authenticated():
             return HttpResponseRedirect('/buildings/')
-        #if not authenticated stay on homepage
+        # if not authenticated stay on homepage
         else:
             return render(request, 'homepage.html')
+
 
 def register_form(request):
     """Register user form"""
@@ -38,13 +41,13 @@ def register_form(request):
     register_title = "Register"
     registered = False
 
-    #if form is submitted, save user and manager info
+    # if form is submitted, save user and manager info
     if request.method == 'POST':
-        #user = User.objects.create_user('john', 'lennon@thebeatles.com', 'johnpassword')
-        user_form = UserForm(data = request.POST)
-        manager_form = ManagerForm(data = request.POST)
+        # user = User.objects.create_user('john', 'lennon@thebeatles.com', 'johnpassword')
+        user_form = UserForm(data=request.POST)
+        manager_form = ManagerForm(data=request.POST)
 
-        #if user and manager fields are valid
+        # if user and manager fields are valid
         if user_form.is_valid() and manager_form.is_valid():
             user = user_form.save()
             user.set_password(user.password)
@@ -61,14 +64,14 @@ def register_form(request):
             # user authentication for username & password
             user = authenticate(username=username, password=password)
 
-        #If user is registered
+        # If user is registered
         if user and user.is_active:
             login(request, user)
-            return HttpResponseRedirect("/buildings/") #return to building page
-        #if user and manager fields are not valid
+            return HttpResponseRedirect("/buildings/")  # return to building page
+        # if user and manager fields are not valid
         else:
             print(user_form.errors, manager_form.errors)
-    #if form has not been submitted
+    # if form has not been submitted
     else:
         user_form = UserForm()
         manager_form = ManagerForm()
@@ -81,6 +84,7 @@ def register_form(request):
     }
     return render(request, 'register_form.html', context)
 
+
 def logout_user(request):
     """Logout user"""
 
@@ -91,6 +95,8 @@ def logout_user(request):
 """---------------------------------------------------------------------------
                                 Page Renders
 ---------------------------------------------------------------------------"""
+
+
 def buildings(request):
     """Render buildings page"""
 
@@ -113,13 +119,15 @@ def buildings(request):
         logout_user(request)
         return HttpResponseRedirect('/')
 
+
 def units(request, building_name):
     """Render units page"""
 
     if request.user.is_authenticated():
 
         # populates page with units saved in the database
-        units = Unit.objects.filter(building_id__manager_id__user=request.user, building_id__building_name=building_name)
+        units = Unit.objects.filter(building_id__manager_id__user=request.user,
+                                    building_id__building_name=building_name)
 
         # Dictionary keys to be used in templates
         context = {
@@ -131,6 +139,7 @@ def units(request, building_name):
         logout_user(request)
         return HttpResponseRedirect('/')
 
+
 def rooms(request, building_name, unit_number):
     """Render rooms page"""
 
@@ -141,7 +150,8 @@ def rooms(request, building_name, unit_number):
 
         # sets list to everything saved in room object
         rooms = Room.objects.filter(unit_id__building_id__manager_id__user=request.user,
-            unit_id__unit_number=unit_number, unit_id__building_id__building_name=building_name)
+                                    unit_id__unit_number=unit_number,
+                                    unit_id__building_id__building_name=building_name)
 
         # Dictionary keys to be used by templates
         context = {
@@ -155,6 +165,7 @@ def rooms(request, building_name, unit_number):
         logout_user(request)
         return HttpResponseRedirect('/')
 
+
 def items(request, building_name, unit_number, room_name):
     """Item details page"""
 
@@ -165,7 +176,9 @@ def items(request, building_name, unit_number, room_name):
 
         # sets list to everything saved in item object
         items = Item.objects.filter(room_id__unit_id__building_id__manager_id__user=request.user,
-            room_id__room_name=room_name,room_id__unit_id__unit_number=unit_number, room_id__unit_id__building_id__building_name=building_name)
+                                    room_id__room_name=room_name,
+                                    room_id__unit_id__unit_number=unit_number,
+                                    room_id__unit_id__building_id__building_name=building_name)
 
         # Dictionary keys to be used by templates
         context = {
@@ -180,6 +193,7 @@ def items(request, building_name, unit_number, room_name):
         logout_user(request)
         return HttpResponseRedirect('/')
 
+
 def item_details(request, building_name, unit_number, room_name, item_description):
     """Render item details page"""
 
@@ -189,41 +203,46 @@ def item_details(request, building_name, unit_number, room_name, item_descriptio
         title = building_name + " >  #" + unit_number + " >  " + room_name + " >  " + item_description
 
         # sets list to everything saved in item detail object
-        item_details = Item_Detail.objects.filter(item_id__room_id__unit_id__building_id__manager_id__user=request.user, item_id__item_description=item_description,
-            item_id__room_id__room_name=room_name,item_id__room_id__unit_id__unit_number=unit_number,item_id__room_id__unit_id__building_id__building_name=building_name)
+        item_details = Item_Detail.objects.filter(item_id__room_id__unit_id__building_id__manager_id__user=request.user,
+                                                  item_id__item_description=item_description,
+                                                  item_id__room_id__room_name=room_name,
+                                                  item_id__room_id__unit_id__unit_number=unit_number,
+                                                  item_id__room_id__unit_id__building_id__building_name=building_name)
 
-        context = { # Dictionary used by template
-            "item_details": item_details,
-            "item_detail_title": title,
-            "building_name": building_name,
-            "unit_number": unit_number,
-            "room_name": room_name,
-            "item_description": item_description
+        context = {  # Dictionary used by template
+                     "item_details": item_details,
+                     "item_detail_title": title,
+                     "building_name": building_name,
+                     "unit_number": unit_number,
+                     "room_name": room_name,
+                     "item_description": item_description
         }
         return render(request, 'item_details.html', context)
     else:
         logout_user(request)
         return HttpResponseRedirect('/')
 
+
 """---------------------------------------------------------------------------
                                 Forms
 ---------------------------------------------------------------------------"""
+
 
 def building_form(request):
     """Create building form"""
 
     building_title = "Add Building"
-    building_form = BuildingForm() #use fields in BuildingForm from forms.py
+    building_form = BuildingForm()  # use fields in BuildingForm from forms.py
     address_form = AddressForm()
 
-    #if form is submitted, save building and address info
+    # if form is submitted, save building and address info
     if request.method == 'POST':
         building_form = BuildingForm(request.POST)
         address_form = AddressForm(request.POST)
 
-        #if input is valid, save form into database
+        # if input is valid, save form into database
         if building_form.is_valid() and address_form.is_valid():
-            #building_form.save()
+            # building_form.save()
             address = address_form.save()
 
             building = building_form.save(commit=False)
@@ -235,7 +254,7 @@ def building_form(request):
                 for i in range(building.number_of_units):
                     # Create unit
                     unit = Unit()
-                    unit.unit_number = i+1
+                    unit.unit_number = i + 1
                     unit.building_id = building
                     unit.is_rented = False
                     unit.parking_space = "no parking"
@@ -266,18 +285,18 @@ def building_form(request):
 
             username = Manager.objects.get(user=request.user)
             building.manager_id.add(username)
-            building.save() #save input into database
+            building.save()  # save input into database
 
-            return HttpResponseRedirect("/buildings/") #return to building page
+            return HttpResponseRedirect("/buildings/")  # return to building page
         else:
             return HttpResponse("Invalid login info")
             # raise forms.ValidationError("Please enter something")
             # raise ValidationError(_('Invalid value%(value)s'),code="invalid",params={'value':'42'})
     else:
-        #save form title in key within context
+        # save form title in key within context
         context = {
             "address_form": address_form,
-            "building_form": building_form, #save form in key within context
+            "building_form": building_form,  # save form in key within context
             "building_title": building_title,
         }
         return render(request, 'building_form.html', context)
@@ -287,15 +306,16 @@ def unit_form(request, building_name):
     """Create unit form"""
 
     unit_title = "Add Unit"
-    unit_form = UnitForm() #use fields in UnitForm fs.py
-    #if page is submitted
+    unit_form = UnitForm()  # use fields in UnitForm fs.py
+    # if page is submitted
     if request.method == 'POST':
         form = UnitForm(request.POST)
-        #if input is valid
+        # if input is valid
         if form.is_valid():
             unit = form.save(commit=False)
             unit.building_id = Building.objects.get(building_name=building_name)
-            unit.save() #save input into database
+
+            unit.save()  # save input into database
 
             # Create bedroom
             bedroom = Room()
@@ -322,21 +342,22 @@ def unit_form(request, building_name):
 
         else:
             return HttpResponse("Invalid login info")
-        #return to previous page
+        # return to previous page
         return HttpResponseRedirect("/buildings/" + building_name + "/")
     else:
         context = {
-            "unit_form": unit_form, #save form in key within context
-            "unit_title": unit_title, #save form title in key within context
+            "unit_form": unit_form,  # save form in key within context
+            "unit_title": unit_title,  # save form title in key within context
             "building_name": building_name,
         }
         return render(request, 'unit_form.html', context)
+
 
 def room_form(request, building_name, unit_number):
     """Create room form"""
 
     room_title = "Add Room"
-    room_form = RoomForm() #use fields in RoomForm from forms.py
+    room_form = RoomForm()  # use fields in RoomForm from forms.py
     #     #if page is submitted
 
     if request.method == 'POST':
@@ -345,39 +366,43 @@ def room_form(request, building_name, unit_number):
 
         if form.is_valid():
             room = form.save(commit=False)
-            room.unit_id = Unit.objects.get(building_id__building_name=building_name, unit_number=unit_number)
-            room.save() #save input into database
+            room.unit_id = Unit.objects.get(building_id__building_name=building_name,
+                                            unit_number=unit_number)
+            room.save()  # save input into database
 
         else:
             return HttpResponse("Invalid login info")
 
 
-        #return to previous page
+        # return to previous page
         return HttpResponseRedirect("/buildings/" + building_name + "/" + unit_number + "/")
     else:
         print('no post')
         context = {
-            "room_form": room_form, #save form in key within context
-            "room_title": room_title, #save form title in key within context
+            "room_form": room_form,  # save form in key within context
+            "room_title": room_title,  # save form title in key within context
             "building_name": building_name,
             "unit_number": unit_number,
         }
         return render(request, 'room_form.html', context)
 
+
 def item_form(request, building_name, unit_number, room_name):
     """Create item form"""
 
     item_title = "Add Item"
-    item_form = ItemForm() # use fields in ItemForm from forms.py
+    item_form = ItemForm()  # use fields in ItemForm from forms.py
     #     #if page is submitted
 
     if request.method == 'POST':
         form = ItemForm(request.POST)
 
         if form.is_valid():
-            post = form.save(commit=False)
-            post.room_id = Room.objects.get(unit_id__building_id__building_name=building_name, unit_id__unit_number=unit_number, room_name=room_name)
-            post.save() # save input into database
+            item = form.save(commit=False)
+            item.room_id = Room.objects.get(unit_id__building_id__building_name=building_name,
+                                            unit_id__unit_number=unit_number,
+                                            room_name=room_name)
+            item.save()  # save input into database
         else:
             return HttpResponse("Invalid login info")
 
@@ -392,30 +417,33 @@ def item_form(request, building_name, unit_number, room_name):
         }
         return render(request, 'item_form.html', context)
 
+
 def item_details_form(request, building_name, unit_number, room_name, item_description):
     """Create item detail from"""
 
-    item_details_title = "Add Item Details"
+    item_details_title = "Update Item Details"
     item_details_form = ItemDetailsForm()  # use fields in ItemDetailsForm from forms.py
-    vendor_form = VendorForm()
+    # vendor_form = VendorForm()
 
     # if page is submitted
     if request.method == 'POST':
         item_details_form = ItemDetailsForm(request.POST)
-        vendor_form = VendorForm(request.POST)
+        # vendor_form = VendorForm(request.POST)
 
         # TODO why are my forms not valid?
-        if item_details_form.is_valid() and vendor_form.is_valid():
+        if item_details_form.is_valid():
 
-            print("Both forms are valid.")
+            # print("Both forms are valid.")
 
-            item_details_form.save()
-            vendor = vendor_form.save()
+            # item_details_form.save()
+            # vendor = vendor_form.save()
 
             item_details = item_details_form.save(commit=False)
-            item_details.vendor_id = vendor
-            item_details.item_id = Item.objects.get(room_id__room_name=room_name, room_id__unit_id__building_id__building_name=building_name,
-                                            room_id__unit_id__unit_number=unit_number, item_description=item_description)
+            # item_details.vendor_id = vendor
+            item_details.item_id = Item.objects.get(room_id__room_name=room_name,
+                                                    room_id__unit_id__building_id__building_name=building_name,
+                                                    room_id__unit_id__unit_number=unit_number,
+                                                    item_description=item_description)
             item_details.save()  # save input into database
 
         else:
@@ -426,7 +454,7 @@ def item_details_form(request, building_name, unit_number, room_name, item_descr
     else:
         context = {
             "item_details_form": item_details_form,  # save form in key within context
-            "vendor_form": vendor_form,
+            # "vendor_form": vendor_form,
             "item_details_title": item_details_title,  # save form title in key within context
             "building_name": building_name,
             "unit_number": unit_number,
@@ -435,14 +463,14 @@ def item_details_form(request, building_name, unit_number, room_name, item_descr
         }
         return render(request, 'item_details_form.html', context)
 
-# def delete(request):
-
 """---------------------------------------------------------------------------
                              Create Objects
 ---------------------------------------------------------------------------"""
 
+
 def create_bedroom(request, unit):
     pass
+
 
 def create_bedroom_items(request, bedroom):
     """Create items found in bedroom"""
@@ -456,6 +484,7 @@ def create_bedroom_items(request, bedroom):
     create_item(request, bedroom, "blinds")
     create_item(request, bedroom, "closet")
     create_item(request, bedroom, "closet doors")
+
 
 def create_kitchen_items(request, kitchen):
     """Create items found in kitchen"""
@@ -478,6 +507,7 @@ def create_kitchen_items(request, kitchen):
     create_item(request, kitchen, "ceiling light")
     create_item(request, kitchen, "floor")
 
+
 def create_bathroom_items(request, bathroom):
     """Create items found in bathroom"""
 
@@ -496,6 +526,7 @@ def create_bathroom_items(request, bathroom):
     create_item(request, bathroom, "vanity mirror")
     create_item(request, bathroom, "floor")
 
+
 def create_item(request, room, item_desc):
     """Create items in all rooms"""
 
@@ -511,20 +542,25 @@ def create_item(request, room, item_desc):
 
     # Create item details
 
+
 def create_item_details(request, item):
     """Create item details for items"""
 
+    # vendor = Vendor()
     item_detail = Item_Detail()
     item_detail.item_id = item
-    item_detail.vendor_info = "original"
+    # item_detail.vendor_info = vendor.vendor_name
     item_detail.date = item_detail.item_id.room_id.unit_id.building_id.build_date
     item_detail.cost = 0
+    item_detail.vendor = "original"
     # item_detail.install_duration = 0
     item_detail.save()
+
 
 """---------------------------------------------------------------------------
                                 Deletions
 ---------------------------------------------------------------------------"""
+
 
 def delete_building(request, building_name):
     Building.objects.filter(building_name=building_name).delete()
