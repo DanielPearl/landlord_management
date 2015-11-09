@@ -227,6 +227,27 @@ def item_details(request, building_name, unit_number, room_name, item_descriptio
                                 Forms
 ---------------------------------------------------------------------------"""
 
+# def create_bedroom(request, unit):
+#     # Create bedroom
+#     bedroom = Room()
+#     bedroom.unit_id = unit
+#     bedroom.room_name = "bedroom"
+#     bedroom.save()
+#
+# def create_kitchen(request, unit):
+#     # Create kitchen
+#     kitchen = Room()
+#     kitchen.unit_id = unit
+#     kitchen.room_name = "kitchen"
+#     kitchen.save()
+#
+# def create_bathroom(request, unit):
+#     # Create bathroom
+#     bathroom = Room()
+#     bathroom.unit_id = unit
+#     bathroom.room_name = "bathroom"
+#     bathroom.save()
+#
 
 def building_form(request):
     """Create building form"""

@@ -5,7 +5,7 @@
         <nav class="vertnav">
 
             <!-- Vertical side navigation -->
-            <a href="{% url 'buildings:item_details_form' building_name unit_number room_name item_description %}" class="new">Create details</a>
+            <a href="{% url 'buildings:item_details_form' building_name unit_number room_name item_description %}" class="new">Update details</a>
             <a href='#' class="new"> Remove details </a>
 
         </nav>
@@ -24,7 +24,7 @@
 
             <!-- {# Populate page with item details database #} -->
             {% for item_detail in item_details %}
-                <section class = 'items_style'>
+                <section class = 'detail_style'>
                     <p href= "#">
                         {{ item_detail.date }}<br/>
                         ${{ item_detail.cost }}<br/>

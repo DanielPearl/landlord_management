@@ -25,20 +25,23 @@
 
             {# Populate page with unit database #}
             {% for unit in units %}
-                <li class = 'units'>
+                <ul class = 'units'>
+                <li>
                     {% if unit.is_rented == False %}
-                        <a class='red' data-toggle="tooltip" title="{{ unit.parking_space }}" href= "
+                        <a class='red' data-toggle="tooltip" title="parking #{{ unit.parking_space }}" href= "
                         {% url 'buildings:rooms' building_name unit.unit_number %}">
                             {{ unit }}
                         </a>
                     {% else %}
-                        <a data-toggle="tooltip" title="{{ unit.parking_space }}" href= "
+                        <a data-toggle="tooltip" title="parking #{{ unit.parking_space }}" href= "
                         {% url 'buildings:rooms' building_name unit.unit_number %}">
                             {{ unit }}
                         </a>
                     {% endif %}
-
+                    <span type="button" class="glyphicon glyphicon-pencil"></span>
                 </li>
+
+                </ul>
             {% endfor %}
 
         </ul>

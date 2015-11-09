@@ -45,6 +45,24 @@ nav a{
     font-family: 'Architects Daughter', cursive;
 }
 
+/* pencil edit glyph */
+span{
+    color:black;
+    display: inline-block;
+    vertical-align: top;
+    width:15px;
+    visibility: hidden;
+}
+
+span:hover{
+    color: blueviolet;
+}
+
+li:hover span{
+    cursor: pointer;
+    visibility: visible;
+}
+
 /* Apartment icons */
 ul a, .items_style{
     text-align: center;
@@ -59,14 +77,24 @@ ul li{
     width:100px;
     color:black;
     overflow: hidden;
+    margin:5px;
 }
 
-img{
-    margin-left: 20px;
-    margin-right: 20px;
+
+li a{
     display: inline-block;
-    text-align: center;
-    width: 3em;
+    width:80%;
+
+}
+img{
+    /*margin-left: 20px;*/
+    /*margin-right: 20px;*/
+    display: inline-block;
+    text-align: right;
+    width: 100%;
+    margin-bottom:5px;
+
+
 }
 
 img:hover{
@@ -201,10 +229,13 @@ a:hover{
  ul .units, .items_style{
      display: inline-block;
      text-align: center;
-     width:30%;
+     width:12%;
      margin:5px;
  }
 
+ .items_style{
+     width:50%;
+ }
  .logout{
      display:block;
      horiz-align: right;
@@ -216,3 +247,13 @@ a:hover{
 .red{
     color:red;
 }
+
+.detail_style{
+    font-family: 'Special Elite', cursive;
+    width:60%;
+    display: inline-block;
+    text-align: center;
+    border-top: solid 1px;
+    padding-top: 10px;
+}
+

@@ -23,13 +23,14 @@
 
             {# Populate page with item database #}
             {% for item in items %}
+                <section>
                 <p class = 'items_style'>
-                    <a data-toggle="tooltip" title="{{ item_details.date }}
-                    {{ item_details.cost }}" href= "
-                    {% url 'buildings:item_details' building_name unit_number room_name item.item_description %}"> {# "{% url 'units:rooms' unit %}"> #}
-                        {{ item }}
+                    <a href= "{% url 'buildings:item_details' building_name unit_number room_name item.item_description %}"> {# "{% url 'units:rooms' unit %}"> #}
+                       {{ item }}
                     </a>
+                <span type="button" class="glyphicon glyphicon-pencil"></span>
                 </p>
+                </section>
             {% endfor %}
 
         </ul>
