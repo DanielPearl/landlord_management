@@ -93,8 +93,6 @@ img{
     text-align: right;
     width: 100%;
     margin-bottom:5px;
-
-
 }
 
 img:hover{
@@ -175,7 +173,7 @@ a:hover{
 
 /* links of individual units or buildings */
 .box li{
-    margin:20px;
+    margin:30px;
 }
 
 .logout:hover, .box a:hover{
@@ -257,3 +255,6 @@ a:hover{
     padding-top: 10px;
 }
 
+.black_font label{
+    color:black;
+}

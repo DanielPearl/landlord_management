@@ -102,17 +102,22 @@ def buildings(request):
 
     if request.user.is_authenticated():
         title = "Buildings"
+        building_form = BuildingForm()
+        address_form = AddressForm()
 
         # sets building_icons to everything saved in building object
         buildings = Building.objects.filter(manager_id__user=request.user)
         # sets name equal to name attribute in user model
         name = request.user.first_name + " " + request.user.last_name
 
+
         # Dictionary keys to be used in templates
         context = {
             "title": title,
             "manager_name": name,
-            "buildings": buildings
+            "buildings": buildings,
+            "building_form": building_form,
+            "address_form": address_form
         }
         return render(request, 'buildings.html', context)
     else:

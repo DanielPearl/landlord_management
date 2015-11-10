@@ -7,8 +7,9 @@
 <head>
     <title> Landlord Program </title>
 
-    {# Fonts loaded onto page #}
     <link rel="stylesheet" type="text/css" href="{% static '../static/css/styles.css' %}">
+
+    {# Fonts loaded onto page #}
     <link href='https://fonts.googleapis.com/css?family=Architects+Daughter' rel='stylesheet' type='text/css'>
     <link href='https://fonts.googleapis.com/css?family=Cabin+Sketch' rel='stylesheet' type='text/css'>
     <link href='https://fonts.googleapis.com/css?family=Slabo+27px|Raleway' rel='stylesheet' type='text/css'>
@@ -25,6 +26,7 @@
     {{ address_form|crispy }}
     <input class='btn btn-primary' type="submit" value='submit'/>
 </form>
+
 </div>
 <script src="{% static 'js/bootstrap.min.js' %}"></script>
 <script src="{% static 'js/ie10-viewport-bug-workaround.js' %}"></script>

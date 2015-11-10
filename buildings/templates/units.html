@@ -38,7 +38,42 @@
                             {{ unit }}
                         </a>
                     {% endif %}
-                    <span type="button" class="glyphicon glyphicon-pencil"></span>
+                    <span type="button" class="glyphicon glyphicon-pencil" data-toggle="modal" data-target="#exampleModal" data-whatever="{{ unit.unit_number }}"></span>
+
+                    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true"></span>
+                                    </button>
+                                    <h4 class="modal-title" id="exampleModalLabel">Edit Building</h4>
+                                </div>
+
+                                <div class="modal-body">
+                                    <div class='form-group'>
+    {#                                  Auto populates modal form #}
+                                        <form class="black_font" method='POST' action='/buildings/building_forms/'>{% csrf_token %}
+                                            <label>unit number</label>
+                                            <input value="{{ unit.unit_number }}"></br></input>
+                                            <label>parking space</label>
+                                            <input value="{{ unit.parking_space }}"></br></input>
+
+                                            <label>is rented?</label>
+                                            <input type="checkbox" value="{{ unit.is_rented }}"></br></input>
+                                        </form>
+                                    </div>
+
+                                </div>
+
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                    <button type="submit" value='submit' class="btn btn-primary">Submit</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                 </li>
                 </ul>
             {% endfor %}

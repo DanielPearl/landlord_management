@@ -17,3 +17,4 @@ $("li a").hover(function() {
 $(function () {
     $('[data-toggle="tooltip"]').tooltip()
     })
+
