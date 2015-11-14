@@ -33,9 +33,10 @@
                     <br/>
                     {{ building }}
                 </a>
-                <span class="glyphicon glyphicon-pencil" data-toggle="modal" data-target="#exampleModal" data-whatever="{{ buildings.building_name }}"></span>
+                <span class="glyphicon glyphicon-pencil" data-toggle="modal" data-target="#exampleModal" data-whatever="{{ building }}"></span>
 
-                <form method='POST' action='/buildings/' class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+{#              Modal#}
+                <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
@@ -48,23 +49,24 @@
                             <div class="modal-body">
                                 <div class='form-group'>
 {#                                  Auto populates modal form #}
-                                    <div class="black_font" >{% csrf_token %}
-                                        <label>building name</label>
-                                        <input name="{{ building.building_name }}" value="{{ building.building_name }}"></br></input>
-                                        <label>build date</label>
-                                        <input value="{{ building.build_date }}"></br></input>
+                                    <form id="userForm" name="userForm" method='POST' action='/buildings/' class="black_font" >{% csrf_token %}
 
-                                        <label>street number</label>
-                                        <input value="{{ building.address_id.street_number }}"></br></input>
-                                        <label>street name</label>
-                                        <input value="{{ building.address_id.street_name }}"></br></input>
-                                        <label>city</label>
-                                        <input value="{{ building.address_id.city }}"></br></input>
-                                        <label>state</label>
-                                        <input value="{{ building.address_id.state }}"></br></input>
-                                        <label>zip code</label>
-                                        <input value="{{ building.address_id.zip_code }}"></br></input>
-                                    </div>
+                                        <label for="recipient-name" class="control-label">building name:</label>
+                                        <input type="text" id="recipient-name" value ="{{ building.building_name }}"></br>
+                                        <label for="recipient-name" class="control-label">building date:</label>
+                                        <input type="text" id="recipient-name" value = "{{ building.build_date }}"></br></input>
+
+                                        <label for="recipient-name" class="control-label">street number:</label>
+                                        <input type="text" id="recipient-name" value = "{{ building.address_id.street_number }}"></br></input>
+                                        <label for="recipient-name" class="control-label">street name:</label>
+                                        <input type="text" id="recipient-name" value = "{{ building.address_id.street_name }}"></br></input>
+                                        <label for="recipient-name" class="control-label">city:</label>
+                                        <input type="text" id="recipient-name" value = "{{ building.address_id.city }}"></br></input>
+                                        <label for="recipient-name" class="control-label">state:</label>
+                                        <input type="text" id="recipient-name" value = "{{ building.address_id.state }}"></br></input>
+                                        <label for="recipient-name" class="control-label">zip code:</label>
+                                        <input type="text" id="recipient-name" value = "{{ building.address_id.zip_code }}"></br></input>
+                                    </form>
                                 </div>
                             </div>
                             <div class="modal-footer">
@@ -73,7 +75,7 @@
                             </div>
                         </div>
                     </div>
-                </form>
+                </div>
 
 
             </li>

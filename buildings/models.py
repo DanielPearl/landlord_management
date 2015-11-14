@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 
 # Create your models here.
 class Address(models.Model):
+    """Address"""
     street_number = models.IntegerField()
     street_name = models.CharField(max_length=30)
     unit_number = models.CharField(max_length=10)
@@ -16,6 +17,7 @@ class Address(models.Model):
                str(self.zip_code)
 
 class Manager(models.Model):
+    """Manager"""
     user = models.OneToOneField(User)
     start_date = models.DateField()
     phone_number = models.IntegerField(default=None)
@@ -24,6 +26,7 @@ class Manager(models.Model):
         return self.user.first_name + " " + self.user.last_name
 
 class Building(models.Model):
+    """Buildings"""
     id = models.AutoField(primary_key=True)
     manager_id = models.ManyToManyField(Manager)
     address_id = models.ForeignKey(Address)
@@ -35,6 +38,7 @@ class Building(models.Model):
         return self.building_name
 
 class Unit(models.Model):
+    """Unit"""
     building_id = models.ForeignKey(Building)
     unit_number = models.CharField(max_length=30)
     parking_space = models.CharField(max_length=30)
@@ -44,6 +48,7 @@ class Unit(models.Model):
         return "unit #" + self.unit_number
 
 class Tenant(models.Model):
+    """Tenant"""
     unit_id = models.ForeignKey(Unit)
     tenant_name = models.CharField(max_length=100)
     image = models.ImageField(upload_to='static/images', height_field=None,
@@ -57,6 +62,7 @@ class Tenant(models.Model):
         return self.tenant_name
 
 class Room(models.Model):
+    """Room"""
     unit_id = models.ForeignKey(Unit)
     room_name = models.CharField(max_length=30)
 
@@ -64,6 +70,7 @@ class Room(models.Model):
         return self.room_name
 
 class Vendor(models.Model):
+    """Vendor"""
     vendor_name = models.CharField(max_length=30)
     phone_number = models.IntegerField()
     address_id = models.OneToOneField(Address)
@@ -75,6 +82,7 @@ class Vendor(models.Model):
         return self.vendor_name
 
 class Item(models.Model):
+    """Item"""
     room_id = models.ForeignKey(Room)
     item_description = models.CharField(max_length=30)
 
@@ -82,6 +90,7 @@ class Item(models.Model):
         return self.item_description
 
 class Item_Detail(models.Model):
+    """Item Detail"""
     item_id = models.ForeignKey(Item)
     # vendor_info = models.ForeignKey(Vendor)
     vendor = models.CharField(max_length=30)
